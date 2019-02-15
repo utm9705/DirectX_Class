@@ -17,8 +17,7 @@ void ModelBone::Copy(ModelBone ** clone)
 	bone->index = index;
 	bone->name = name;
 	bone->parentIndex = parentIndex;
-	bone->local = local;
-	bone->global = global;
+	bone->transform = transform;
 
 	*clone = bone;
 }

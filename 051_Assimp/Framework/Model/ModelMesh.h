@@ -40,4 +40,8 @@ private:
 	UINT vertexCount;
 	VertexTextureNormalBlend* vertices;
 	ID3D11Buffer* vertexBuffer;
+
+	UINT indexCount;
+	UINT* indices;
+	ID3D11Buffer* indexBuffer;
 };

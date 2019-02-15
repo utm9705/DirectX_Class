@@ -21,6 +21,8 @@ private:
 private:
 	UINT pass;
 
+	wstring name;
+
 	Material* material;
 	wstring materialName;
 
@@ -28,4 +30,7 @@ private:
 
 	UINT startVertex;
 	UINT vertexCount;
+
+	UINT startIndex;
+	UINT indexCount;
 };

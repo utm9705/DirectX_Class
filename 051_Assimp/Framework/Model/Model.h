@@ -28,9 +28,6 @@ public:
 	void ReadMaterial(wstring file);
 	void ReadMesh(wstring file);
 
-	void CopyGlobalBoneTo(vector<D3DXMATRIX>& transforms);
-	void CopyGlobalBoneTo(vector<D3DXMATRIX>& transforms, D3DXMATRIX& w);
-
 private:
 	void BindingBone();
 	void BindingMesh();

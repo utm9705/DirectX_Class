@@ -13,13 +13,18 @@ public:
 	~Loader();
 
 	void ExportMaterial(wstring saveFolder = L"", wstring fileName = L"");
+	void ExportMesh(wstring saveFolder = L"", wstring fileName = L"");
 
 private:
 	void ReadMaterial();
 	void WriteMaterial(wstring saveFolder, wstring fileName);
 	void WriteXmlColor(Xml::XMLDocument* document, Xml::XMLElement* element, D3DXCOLOR& color);
-	void WriteTexture();
+	string WriteTexture(string file);
 
+
+	void ReadBoneData(aiNode* node, int index, int parent);
+	void ReadMeshData(aiNode* node, int parentBone);
+	void WriteMeshData(wstring saveFolder, wstring fileName);
 
 private:
 	Assimp::Importer* importer;
@@ -29,5 +34,7 @@ private:
 	wstring saveFolder;
 	wstring saveName;
 
-	vector<struct AssimpMaterial *> materials;
+	vector<struct AsMaterial *> materials;
+	vector<struct AsBone*> bones;
+	vector<struct AsMesh*> meshes;
 };

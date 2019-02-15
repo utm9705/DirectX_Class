@@ -220,8 +220,7 @@ void Models::ReadMeshData(wstring file)
 
 		bone->parentIndex = r->Int();
 
-		bone->local = r->Matrix();
-		bone->global = r->Matrix();
+		bone->transform = r->Matrix();
 
 		bones.push_back(bone);
 	}
@@ -254,16 +253,41 @@ void Models::ReadMeshData(wstring file)
 			);
 		}
 
+		//IndexData
+		{
+			UINT count = r->UInt();
+
+			vector<UINT> indices;
+			indices.assign(count, UINT());
+
+			void* ptr = (void *)&(indices[0]);
+			r->Byte(&ptr, sizeof(UINT) * count);
+
+
+			mesh->indices = new UINT[count];
+			mesh->indexCount = count;
+			copy
+			(
+				indices.begin(), indices.end(),
+				stdext::checked_array_iterator<UINT *>(mesh->indices, count)
+			);
+		}
+
 
 		UINT partCount = r->UInt();
 		for (UINT k = 0; k < partCount; k++)
 		{
 			ModelMeshPart* meshPart = new ModelMeshPart();
 			meshPart->parent = mesh;
+
+			meshPart->name = String::ToWString(r->String());
 			meshPart->materialName = String::ToWString(r->String());
 
 			meshPart->startVertex = r->UInt();
 			meshPart->vertexCount = r->UInt();
+
+			meshPart->startIndex = r->UInt();
+			meshPart->indexCount = r->UInt();
 
 			mesh->meshParts.push_back(meshPart);
 		}//for(k)

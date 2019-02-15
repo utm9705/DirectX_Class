@@ -10,6 +10,12 @@ ModelMesh::ModelMesh()
 
 ModelMesh::~ModelMesh()
 {
+	SAFE_DELETE_ARRAY(vertices);
+	SAFE_DELETE_ARRAY(indices);
+
+	SAFE_RELEASE(vertexBuffer);
+	SAFE_RELEASE(indexBuffer);
+
 	for (ModelMeshPart* part : meshParts)
 		SAFE_DELETE(part);
 }
@@ -36,6 +42,10 @@ void ModelMesh::Copy(ModelMesh ** clone)
 	mesh->vertices = new VertexTextureNormalBlend[this->vertexCount];
 	memcpy(mesh->vertices, this->vertices, sizeof(VertexTextureNormalBlend) * vertexCount);
 
+	mesh->indexCount = this->indexCount;
+	mesh->indices = new UINT[this->indexCount];
+	memcpy(mesh->indices, this->indices, sizeof(UINT) * indexCount);
+
 	for (ModelMeshPart* part : meshParts)
 	{
 		ModelMeshPart* temp = NULL;
@@ -55,23 +65,24 @@ void ModelMesh::Pass(UINT pass)
 
 void ModelMesh::Binding()
 {
-	//D3D11_BUFFER_DESC desc;
-	//D3D11_SUBRESOURCE_DATA data;
-
-	////1. Vertex Buffer
-	//{
-	//	ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
-	//	desc.Usage = D3D11_USAGE_DEFAULT;
-	//	desc.ByteWidth = sizeof(VertexTextureNormalBlend) * vertexCount;
-	//	desc.BindFlags = D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
-	//	desc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS;
-
-	//	ZeroMemory(&data, sizeof(D3D11_SUBRESOURCE_DATA));
-	//	data.pSysMem = vertices;
-
-	//	HRESULT hr = D3D::GetDevice()->CreateBuffer(&desc, &data, &vertexBuffer);
-	//	assert(SUCCEEDED(hr));
-	//}
-
 	CsResource::CreateRawBuffer(sizeof(VertexTextureNormalBlend) * vertexCount, vertices, &vertexBuffer);
+
+
+	D3D11_BUFFER_DESC desc;
+	D3D11_SUBRESOURCE_DATA data;
+
+	//Index Buffer
+	{
+		ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
+		desc.Usage = D3D11_USAGE_IMMUTABLE;
+		desc.ByteWidth = sizeof(UINT) * indexCount;
+		desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+
+		ZeroMemory(&data, sizeof(D3D11_SUBRESOURCE_DATA));
+		data.pSysMem = indices;
+
+		HRESULT hr = D3D::GetDevice()->CreateBuffer(&desc, &data, &indexBuffer);
+		assert(SUCCEEDED(hr));
+	}
+
 }

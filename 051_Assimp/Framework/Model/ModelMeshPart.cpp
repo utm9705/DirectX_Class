@@ -20,13 +20,18 @@ void ModelMeshPart::Copy(ModelMeshPart ** clone)
 {
 	ModelMeshPart* part = new ModelMeshPart();
 	part->materialName = materialName;
+
 	part->startVertex = startVertex;
 	part->vertexCount = vertexCount;
+
+	part->startIndex = startIndex;
+	part->indexCount = indexCount;
 
 	*clone = part;
 }
 
 void ModelMeshPart::Render()
 {
-	material->GetShader()->Draw(0, pass, vertexCount, startVertex);
+	//material->GetShader()->Draw(0, pass, vertexCount, startVertex);
+	material->GetShader()->DrawIndexed(0, pass, indexCount, startIndex, 0);
 }

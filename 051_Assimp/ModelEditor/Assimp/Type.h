@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
-struct AssimpMaterial
+struct AsMaterial
 {
 	string Name;
 
@@ -15,4 +15,39 @@ struct AssimpMaterial
 	float SpecularExp;
 
 	string NormalFile;
+};
+
+struct AsBone
+{
+	int Index;
+	string Name;
+
+	int Parent;
+
+	D3DXMATRIX Transform;
+};
+
+struct AsMeshPart
+{
+	string Name;
+	string MaterialName;
+
+	UINT StartVertex;
+	UINT VertexCount;
+
+	UINT StartIndex;
+	UINT IndexCount;
+};
+
+struct AsMesh
+{
+	string Name;
+	int ParentBone;
+
+	aiMesh* Mesh;
+
+	vector<VertexTextureNormalBlend> Vertices;
+	vector<UINT> Indices;
+
+	vector<AsMeshPart *> MeshParts;
 };

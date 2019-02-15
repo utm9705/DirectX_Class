@@ -13,7 +13,7 @@ Loader::Loader(wstring file, wstring saveFolder, wstring saveName)
 	(
 		String::ToString(fbxFile),
 		aiProcess_ConvertToLeftHanded |
-		aiProcess_Triangulate | aiProcess_OptimizeMeshes
+		aiProcess_Triangulate | aiProcess_GenNormals
 	);
 	assert(scene != NULL);
 }
@@ -32,9 +32,18 @@ void Loader::ExportMaterial(wstring saveFolder, wstring fileName)
 	wstring tempName = fileName.size() < 1 ? this->saveName : fileName;
 
 	WriteMaterial(tempFolder, tempName + L".material");
-	WriteTexture();
+}
 
-	int a = 10;
+void Loader::ExportMesh(wstring saveFolder, wstring fileName)
+{
+	ReadBoneData(scene->mRootNode, -1, -1);
+	//ReadSkinData();
+
+
+	wstring tempFolder = saveFolder.size() < 1 ? this->saveFolder : saveFolder;
+	wstring tempName = fileName.size() < 1 ? this->saveName : fileName;
+
+	WriteMeshData(tempFolder, tempName + L".mesh");
 }
 
 void Loader::ReadMaterial()
@@ -45,14 +54,13 @@ void Loader::ReadMaterial()
 	{
 		aiMaterial* asMaterial = scene->mMaterials[i];
 
-		AssimpMaterial* material = new AssimpMaterial();
-		ZeroMemory(material, sizeof(AssimpMaterial));
+		AsMaterial* material = new AsMaterial();
+		ZeroMemory(material, sizeof(AsMaterial));
 
 		material->Name = asMaterial->GetName().C_Str();
 
 		aiString file;
 		aiColor3D color;
-		aiReturn result;
 
 		asMaterial->Get(AI_MATKEY_COLOR_AMBIENT, color);
 		material->Ambient = D3DXCOLOR(color.r, color.g, color.b, 1.0f);
@@ -100,7 +108,7 @@ void Loader::WriteMaterial(wstring saveFolder, wstring fileName)
 	document->LinkEndChild(root);
 
 
-	for (AssimpMaterial* material : materials)
+	for (AsMaterial* material : materials)
 	{
 		Xml::XMLElement* node = document->NewElement("Material");
 		root->LinkEndChild(node);
@@ -116,20 +124,17 @@ void Loader::WriteMaterial(wstring saveFolder, wstring fileName)
 		string save = String::ToString(saveFolder);
 
 		element = document->NewElement("DiffuseFile");
-		material->DiffuseFile = Path::GetFileName(material->DiffuseFile);
-		material->DiffuseFile = material->DiffuseFile.length < 1 ? "" : save + material->DiffuseFile;
+		material->DiffuseFile = WriteTexture(material->DiffuseFile);
 		element->SetText(material->DiffuseFile.c_str());
 		node->LinkEndChild(element);
 
 		element = document->NewElement("SpecularFile");
-		material->SpecularFile = Path::GetFileName(material->SpecularFile);
-		material->SpecularFile = material->SpecularFile.length < 1 ? "" : save + material->SpecularFile;
+		material->SpecularFile = WriteTexture(material->SpecularFile);
 		element->SetText(material->SpecularFile.c_str());
 		node->LinkEndChild(element);
 
 		element = document->NewElement("NormalFile");
-		material->NormalFile = Path::GetFileName(material->NormalFile);
-		material->NormalFile = material->NormalFile.length < 1 ? "" : save + material->NormalFile;
+		material->NormalFile = WriteTexture(material->NormalFile);
 		element->SetText(material->NormalFile.c_str());
 		node->LinkEndChild(element);
 
@@ -178,58 +183,200 @@ void Loader::WriteXmlColor(Xml::XMLDocument * document, Xml::XMLElement * elemen
 	element->LinkEndChild(a);
 }
 
-void Loader::WriteTexture()
+string Loader::WriteTexture(string file)
 {
-	for (UINT i = 0; i < scene->mNumTextures; i++)
+	if (file.length() < 1)return "";
+
+	const aiTexture* texture = scene->GetEmbeddedTexture(file.c_str());
+	if (texture != NULL)
 	{
-		aiTexture* origin = scene->mTextures[i];
-		if (origin == NULL) continue;
+		#pragma region 내장 텍스쳐
+		string saveName = Path::GetFileNameWithoutExtension(file.c_str());
+		saveName = String::ToString(saveFolder) + saveName + ".png";
 
-
-		const aiTexture* texture = scene->GetEmbeddedTexture(origin->mFilename.C_Str());
-		if (texture != NULL)
+		if (texture->mHeight < 1)
 		{
-			#pragma region 내장 텍스쳐
-			string file = Path::GetFileNameWithoutExtension(origin->mFilename.C_Str());
-			file = String::ToString(saveFolder) + file + ".png";
+			FILE* fp;
+			fopen_s(&fp, saveName.c_str(), "wb");
+			fwrite(texture->pcData, texture->mWidth, 1, fp);
+			fclose(fp);
 
-
-			if (texture->mHeight < 1) //압축된 텍스쳐
-			{
-				FILE* p = fopen(file.c_str(), "wb");
-				fwrite(texture->pcData, texture->mWidth, 1, p);
-				fclose(p);
-			}
-			else
-			{
-				ID3D11Texture2D* dest;
-				D3D11_TEXTURE2D_DESC destDesc;
-				ZeroMemory(&destDesc, sizeof(D3D11_TEXTURE2D_DESC));
-				destDesc.Width = texture->mWidth;
-				destDesc.Height = texture->mHeight;
-				destDesc.MipLevels = 1;
-				destDesc.ArraySize = 1;
-				destDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-				destDesc.SampleDesc.Count = 1;
-				destDesc.SampleDesc.Quality = 0;
-
-				D3D11_SUBRESOURCE_DATA subResource = { 0 };
-				subResource.pSysMem = texture->pcData;
-
-				HRESULT hr;
-				hr = D3D::GetDevice()->CreateTexture2D(&destDesc, &subResource, &dest);
-				assert(SUCCEEDED(hr));
-
-				D3DX11SaveTextureToFileA(D3D::GetDC(), dest, D3DX11_IFF_PNG, file.c_str());
-			}// if(texture->mHeight)
-			#pragma endregion
+			return saveName;
 		}
 		else
 		{
-			#pragma region 외장 텍스쳐
-			#pragma endregion
-		} //if(texture)
+			ID3D11Texture2D* dest;
+			D3D11_TEXTURE2D_DESC destDesc;
+			ZeroMemory(&destDesc, sizeof(D3D11_TEXTURE2D_DESC));
+			destDesc.Width = texture->mWidth;
+			destDesc.Height = texture->mHeight;
+			destDesc.MipLevels = 1;
+			destDesc.ArraySize = 1;
+			destDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+			destDesc.SampleDesc.Count = 1;
+			destDesc.SampleDesc.Quality = 0;
+
+			D3D11_SUBRESOURCE_DATA subResource = { 0 };
+			subResource.pSysMem = texture->pcData;
+
+
+			HRESULT hr;
+			hr = D3D::GetDevice()->CreateTexture2D(&destDesc, &subResource, &dest);
+			assert(SUCCEEDED(hr));
+
+			D3DX11SaveTextureToFileA(D3D::GetDC(), dest, D3DX11_IFF_PNG, saveName.c_str());
+
+			return saveName;
+		}
+		#pragma endregion
+	}
+	else
+	{
+		string directory = Path::GetDirectoryName(String::ToString(fbxFile));
+		string origin = directory + file;
+		String::Replace(&origin, "\\", "/");// 역슬래쉬 변환
+
+		bool bExist = Path::ExistFile(origin);
+		if (bExist == false) 
+			return "";
+
+		string saveName = String::ToString(saveFolder) + Path::GetFileName(file);
+		CopyFileA(origin.c_str(), saveName.c_str(), FALSE);
+
+		return saveName;
 	}
 
-	int a = 0;
+	return "";
+}
+
+void Loader::ReadBoneData(aiNode * node, int index, int parent)
+{
+	AsBone* bone = new AsBone();
+	bone->Index = index;
+	bone->Parent = parent;
+	bone->Name = node->mName.C_Str();
+
+	D3DXMATRIX transform(node->mTransformation[0]);
+	D3DXMatrixTranspose(&bone->Transform, &transform);
+
+	bones.push_back(bone);
+
+	ReadMeshData(node, index);
+
+	for (int i = 0; i < node->mNumChildren; i++)
+		ReadBoneData(node->mChildren[i], bones.size(), index);
+}
+
+void Loader::ReadMeshData(aiNode * node, int parentBone)
+{
+	if (node->mNumMeshes < 1)
+		return;
+
+	AsMesh* asMesh = new AsMesh();
+	asMesh->Name = node->mName.C_Str();
+	asMesh->ParentBone = parentBone;
+
+	for (UINT i = 0; i < node->mNumMeshes; i++)
+	{
+		UINT index = node->mMeshes[i];
+		aiMesh* mesh = scene->mMeshes[index];
+
+		UINT startVertex = asMesh->Vertices.size();
+		UINT startIndex = asMesh->Indices.size();
+		
+		for (UINT m = 0; m < mesh->mNumVertices; m++)
+		{
+			VertexTextureNormalBlend vertex;
+
+			memcpy(&vertex.Position, &mesh->mVertices[m], sizeof(D3DXVECTOR3));
+
+			if (mesh->HasTextureCoords(0) == true)
+				memcpy(&vertex.Uv, &mesh->mTextureCoords[0][m], sizeof(D3DXVECTOR2));
+
+			memcpy(&vertex.Normal, &mesh->mNormals[m], sizeof(D3DXVECTOR3));
+
+			asMesh->Vertices.push_back(vertex);
+		}//for(m)
+
+		for (UINT f = 0; f < mesh->mNumFaces; f++)
+		{
+			aiFace& face = mesh->mFaces[f];
+
+			for (UINT k = 0; k < face.mNumIndices; k++)
+			{
+				asMesh->Indices.push_back(face.mIndices[k]);
+				asMesh->Indices.back() += startVertex;
+			}//for(k)
+		}//for(f)
+
+
+		AsMeshPart* meshPart = new AsMeshPart();
+
+		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+		meshPart->Name = mesh->mName.C_Str();
+		meshPart->MaterialName = material->GetName().C_Str();
+		meshPart->StartVertex = startVertex;
+		meshPart->VertexCount = asMesh->Vertices.size() - startVertex;
+		meshPart->StartIndex = startIndex;
+		meshPart->IndexCount = asMesh->Indices.size() - startIndex;
+
+		asMesh->MeshParts.push_back(meshPart);
+	}//for(i)
+
+	meshes.push_back(asMesh);
+}
+
+void Loader::WriteMeshData(wstring saveFolder, wstring fileName)
+{
+	Path::CreateFolders(saveFolder);
+
+	BinaryWriter* w = new BinaryWriter();
+	w->Open(saveFolder + fileName);
+
+	w->UInt(bones.size());
+	for (AsBone* bone : bones)
+	{
+		w->Int(bone->Index);
+		w->String(bone->Name);
+
+		w->Int(bone->Parent);
+
+		w->Matrix(bone->Transform);
+
+		SAFE_DELETE(bone);
+	}
+
+
+	w->UInt(meshes.size());
+	for (AsMesh* meshData : meshes)
+	{
+		w->String(meshData->Name);
+		w->Int(meshData->ParentBone);
+
+		w->UInt(meshData->Vertices.size());
+		w->Byte(&meshData->Vertices[0], sizeof(VertexTextureNormalBlend) * meshData->Vertices.size());
+
+		w->UInt(meshData->Indices.size());
+		w->Byte(&meshData->Indices[0], sizeof(UINT) * meshData->Indices.size());
+
+		w->UInt(meshData->MeshParts.size());
+		for (AsMeshPart* part : meshData->MeshParts)
+		{
+			w->String(part->Name);
+			w->String(part->MaterialName);
+
+			w->UInt(part->StartVertex);
+			w->UInt(part->VertexCount);
+
+			w->UInt(part->StartIndex);
+			w->UInt(part->IndexCount);
+
+			SAFE_DELETE(part);
+		}
+
+		SAFE_DELETE(meshData);
+	}
+
+	w->Close();
+	SAFE_DELETE(w);
 }

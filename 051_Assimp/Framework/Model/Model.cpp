@@ -50,34 +50,3 @@ ModelMesh * Model::MeshByName(wstring name)
 
 	return NULL;
 }
-
-void Model::CopyGlobalBoneTo(vector<D3DXMATRIX>& transforms)
-{
-	D3DXMATRIX w;
-	D3DXMatrixIdentity(&w);
-
-	CopyGlobalBoneTo(transforms, w);
-}
-
-void Model::CopyGlobalBoneTo(vector<D3DXMATRIX>& transforms, D3DXMATRIX & w)
-{
-	transforms.clear();
-	transforms.assign(bones.size(), D3DXMATRIX());
-
-	for (size_t i = 0; i < bones.size(); i++)
-	{
-		ModelBone* bone = bones[i];
-
-		if (bone->Parent() != NULL)
-		{
-			int index = bone->parent->index;
-			transforms[i] = bone->local * transforms[index];
-		}
-		else
-		{
-			transforms[i] = bone->local * w;
-		}
-
-		bone->global = transforms[i];
-	}
-}

@@ -22,11 +22,8 @@ public:
 
 	wstring Name() { return name; }
 
-	D3DXMATRIX& Local() { return local; }
-	void Local(D3DXMATRIX& matrix) { local = matrix; }
-
-	D3DXMATRIX& Global() { return global; }
-	void Global(D3DXMATRIX& matrix) { global = matrix; }
+	D3DXMATRIX& Transform() { return transform; }
+	void Local(D3DXMATRIX& matrix) { transform = matrix; }
 
 public:
 	void Copy(ModelBone** clone);
@@ -40,6 +37,5 @@ private:
 
 	vector<ModelBone *> childs;
 
-	D3DXMATRIX local;
-	D3DXMATRIX global;
+	D3DXMATRIX transform;
 };

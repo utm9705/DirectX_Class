@@ -115,7 +115,7 @@ void GameAnimator::UpdateTransforms()
 			parentTransform = boneTransforms[parentIndex];
 
 
-		D3DXMATRIX inv = bone->Global();
+		D3DXMATRIX inv = bone->Transform();
 		D3DXMatrixInverse(&inv, NULL, &inv);
 
 		boneTransforms[i] = animation * parentTransform;

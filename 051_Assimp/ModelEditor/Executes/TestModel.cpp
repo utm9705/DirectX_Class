@@ -7,11 +7,11 @@ void TestModel::Initialize()
 	Loader* loader = NULL;
 
 	////Tank.fbx
-	//loader = new FbxLoader
+	//loader = new Loader
 	//(
 	//	Assets + L"Tank/Tank.fbx", Models + L"Tank/", L"Tank"
 	//);
-	////loader->ExportMaterial();
+	//loader->ExportMaterial();
 	//loader->ExportMesh();
 	//SAFE_DELETE(loader);
 
@@ -36,13 +36,13 @@ void TestModel::Initialize()
 	//SAFE_DELETE(loader);
 
 
-	//KomodoDragon.fbx
+	//Tower.fbx
 	loader = new Loader
 	(
 		Assets + L"Tower/Tower.fbx", Models + L"Tower/", L"Tower"
 	);
 	loader->ExportMaterial();
-	//loader->ExportMaterial();
+	loader->ExportMesh();
 	SAFE_DELETE(loader);
 }
 
@@ -51,8 +51,8 @@ void TestModel::Ready()
 	model = new GameModel
 	(
 		Shaders + L"046_Model.fx",
-		Models + L"Kachujin/Kachujin.material",
-		Models + L"Kachujin/Kachujin.mesh"
+		Models + L"Tower/Tower.material",
+		Models + L"Tower/Tower.mesh"
 	);
 	model->Ready();
 }
