@@ -55,6 +55,7 @@ void TestModel::Ready()
 		Models + L"Tower/Tower.mesh"
 	);
 	model->Ready();
+	model->Scale(0.1f, 0.1f, 0.1f);
 }
 
 void TestModel::Destroy()
