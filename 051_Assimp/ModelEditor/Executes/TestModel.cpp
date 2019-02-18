@@ -6,23 +6,23 @@ void TestModel::Initialize()
 {
 	Loader* loader = NULL;
 
-	////Tank.fbx
-	//loader = new Loader
-	//(
-	//	Assets + L"Tank/Tank.fbx", Models + L"Tank/", L"Tank"
-	//);
-	//loader->ExportMaterial();
-	//loader->ExportMesh();
-	//SAFE_DELETE(loader);
+	//Tank.fbx
+	loader = new Loader
+	(
+		Assets + L"Tank/Tank.fbx", Models + L"Tank/", L"Tank"
+	);
+	loader->ExportMaterial();
+	loader->ExportMesh();
+	SAFE_DELETE(loader);
 
 
 	////Kachujin.fbx
 	//loader = new Loader
 	//(
-	//	Assets + L"Kachujin/Mesh.fbx", Models + L"Kachujin/", L"Mesh"
+	//	Assets + L"Kachujin/Mesh.fbx", Models + L"Mesh/", L"Mesh"
 	//);
 	//loader->ExportMaterial();
-	////loader->ExportMaterial();
+	//loader->ExportMesh();
 	//SAFE_DELETE(loader);
 
 
@@ -36,14 +36,14 @@ void TestModel::Initialize()
 	//SAFE_DELETE(loader);
 
 
-	//Tower.fbx
-	loader = new Loader
-	(
-		Assets + L"Tower/Tower.fbx", Models + L"Tower/", L"Tower"
-	);
-	loader->ExportMaterial();
-	loader->ExportMesh();
-	SAFE_DELETE(loader);
+	////Tower.fbx
+	//loader = new Loader
+	//(
+	//	Assets + L"Tower/Tower.fbx", Models + L"Tower/", L"Tower"
+	//);
+	//loader->ExportMaterial();
+	//loader->ExportMesh();
+	//SAFE_DELETE(loader);
 }
 
 void TestModel::Ready()
@@ -51,11 +51,11 @@ void TestModel::Ready()
 	model = new GameModel
 	(
 		Shaders + L"046_Model.fx",
-		Models + L"Tower/Tower.material",
-		Models + L"Tower/Tower.mesh"
+		Models + L"Tank/Tank.material",
+		Models + L"Tank/Tank.mesh"
 	);
 	model->Ready();
-	model->Scale(0.1f, 0.1f, 0.1f);
+	//model->Scale(0.1f, 0.1f, 0.1f);
 }
 
 void TestModel::Destroy()

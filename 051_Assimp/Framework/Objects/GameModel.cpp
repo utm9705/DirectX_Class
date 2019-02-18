@@ -107,6 +107,7 @@ void GameModel::UpdateTransforms()
 
 
 		D3DXMATRIX inv = bone->Transform();
+		D3DXMatrixInverse(&inv, NULL, &inv);
 
 		boneTransforms[i] = parentTransform;
 		renderTransforms[i] = inv * boneTransforms[i];

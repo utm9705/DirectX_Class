@@ -10,5 +10,5 @@ public:
 	void Render() override;
 
 private:
-	float f = 0;
+
 };
