@@ -259,6 +259,15 @@ void Loader::ReadBoneData(aiNode * node, int index, int parent)
 	D3DXMATRIX transform(node->mTransformation[0]);
 	D3DXMatrixTranspose(&bone->Transform, &transform);
 
+	D3DXMATRIX temp;
+	if (parent == -1)
+		D3DXMatrixIdentity(&temp);
+	else
+		temp = bones[parent]->Transform;
+
+	D3DXMatrixInverse(&bone->Transform, NULL, &bone->Transform);
+	bone->Transform = temp * bone->Transform;
+
 	bones.push_back(bone);
 
 	ReadMeshData(node, index);
@@ -316,14 +325,16 @@ void Loader::ReadMeshData(aiNode * node, int parentBone)
 		meshPart->Name = mesh->mName.C_Str();
 		meshPart->MaterialName = material->GetName().C_Str();
 		meshPart->StartVertex = startVertex;
-		meshPart->VertexCount = asMesh->Vertices.size() - startVertex;
+		meshPart->VertexCount = mesh->mNumVertices;
 		meshPart->StartIndex = startIndex;
-		meshPart->IndexCount = asMesh->Indices.size() - startIndex;
+		meshPart->IndexCount = mesh->mNumFaces* mesh->mFaces->mNumIndices;
 
 		asMesh->MeshParts.push_back(meshPart);
 	}//for(i)
 
 	meshes.push_back(asMesh);
+
+	int a = 10;
 }
 
 void Loader::WriteMeshData(wstring saveFolder, wstring fileName)
