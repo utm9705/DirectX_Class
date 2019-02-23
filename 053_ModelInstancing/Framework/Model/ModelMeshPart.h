@@ -17,6 +17,7 @@ private:
 	void Copy(ModelMeshPart** clone);
 
 	void Render();
+	void RenderInstance(UINT count);
 
 private:
 	UINT pass;
@@ -33,4 +34,6 @@ private:
 
 	UINT startIndex;
 	UINT indexCount;
+
+	ID3DX11EffectScalarVariable* sBoneIndex;
 };

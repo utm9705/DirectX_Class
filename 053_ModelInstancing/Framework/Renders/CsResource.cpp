@@ -4,9 +4,11 @@
 void CsResource::CreateRawBuffer(UINT byteWidth, void * initData, ID3D11Buffer ** buffer)
 {
 	D3D11_BUFFER_DESC desc = { 0 };
-	desc.BindFlags = D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_VERTEX_BUFFER;
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_VERTEX_BUFFER;
 	desc.ByteWidth = byteWidth;
 	desc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS;
+	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	desc.Usage = D3D11_USAGE_DYNAMIC;
 
 	HRESULT hr;
 	if (initData != NULL)

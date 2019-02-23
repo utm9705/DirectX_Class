@@ -8,7 +8,7 @@ void ModelMeshPart::Pass(UINT pass)
 }
 
 ModelMeshPart::ModelMeshPart()
-	: pass(0)
+	: pass(0), sBoneIndex(NULL)
 {
 }
 
@@ -32,6 +32,21 @@ void ModelMeshPart::Copy(ModelMeshPart ** clone)
 
 void ModelMeshPart::Render()
 {
+	if (sBoneIndex == NULL)
+		sBoneIndex = material->GetShader()->AsScalar("BoneIndex");
+
+	sBoneIndex->SetInt(parent->ParentBoneIndex());
 	//material->GetShader()->Draw(0, pass, vertexCount, startVertex);
 	material->GetShader()->DrawIndexed(0, pass, indexCount, startIndex, 0);
+}
+
+void ModelMeshPart::RenderInstance(UINT count)
+{
+	if (sBoneIndex == NULL)
+		sBoneIndex = material->GetShader()->AsScalar("BoneIndex");
+
+	sBoneIndex->SetInt(parent->ParentBoneIndex());
+	//material->GetShader()->Draw(0, pass, vertexCount, startVertex);
+
+	material->GetShader()->DrawIndexedInstanced(0, pass, indexCount, count, startIndex, 0);
 }

@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Assimp\Loader.h" />
     <ClInclude Include="Assimp\Type.h" />
-    <ClInclude Include="Executes\TestVertex.h" />
+    <ClInclude Include="Executes\TestModel.h" />
     <ClInclude Include="Fbx\FbxLoader.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
@@ -38,7 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Assimp\Loader.cpp" />
-    <ClCompile Include="Executes\TestVertex.cpp" />
+    <ClCompile Include="Executes\TestModel.cpp" />
     <ClCompile Include="Fbx\FbxLoader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>

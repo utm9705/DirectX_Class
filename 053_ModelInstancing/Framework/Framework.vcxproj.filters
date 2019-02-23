@@ -142,6 +142,9 @@
     <ClCompile Include="Systems\Widget.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Model\ModelInstance.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Boundings">
@@ -329,6 +332,9 @@
     </ClInclude>
     <ClInclude Include="Systems\Widget.h">
       <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\ModelInstance.h">
+      <Filter>Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
