@@ -24,7 +24,7 @@
     <ClInclude Include="Assimp\Type.h">
       <Filter>Assimp</Filter>
     </ClInclude>
-    <ClInclude Include="Executes\TestVertex.h">
+    <ClInclude Include="Executes\TestModel.h">
       <Filter>Executes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -45,7 +45,7 @@
     <ClCompile Include="Assimp\Loader.cpp">
       <Filter>Assimp</Filter>
     </ClCompile>
-    <ClCompile Include="Executes\TestVertex.cpp">
+    <ClCompile Include="Executes\TestModel.cpp">
       <Filter>Executes</Filter>
     </ClCompile>
   </ItemGroup>

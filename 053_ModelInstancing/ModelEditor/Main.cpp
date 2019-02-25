@@ -3,7 +3,7 @@
 #include "Systems/Window.h"
 #include "Viewer/Freedom.h"
 
-#include "Executes/TestVertex.h"
+#include "Executes/TestModel.h"
 
 void Main::Initialize()
 {
@@ -12,7 +12,7 @@ void Main::Initialize()
 	Context::Get()->GetMainCamera()->RotationDegree(0, 0);
 	Context::Get()->GetMainCamera()->Position(0, 0, -5);
 
-	Push(new TestVertex());
+	Push(new TestModel());
 }
 
 void Main::Ready()
@@ -104,6 +104,8 @@ void Main::Push(IExecute * execute)
 
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR param, int command)
 {
+	srand((UINT)time(NULL));
+
 	D3DDesc desc;
 	desc.AppName = L"D3D Game";
 	desc.Instance = instance;

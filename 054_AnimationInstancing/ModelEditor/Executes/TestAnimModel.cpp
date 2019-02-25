@@ -70,7 +70,7 @@ void TestAnimModel::Update()
 
 		scale = Math::Random(0.02f, 0.07f);
 		D3DXMatrixScaling(&S, scale, scale, scale);
-		D3DXMatrixTranslation(&T, Math::Random(-1000.0f, 100.0f), 0, Math::Random(-100.0f, 100.0f));
+		D3DXMatrixTranslation(&T, Math::Random(-100.0f, 100.0f), 0, Math::Random(-100.0f, 100.0f));
 
 		D3DXMATRIX world = S * T;
 		modelAnimInstance->AddWorld(world);

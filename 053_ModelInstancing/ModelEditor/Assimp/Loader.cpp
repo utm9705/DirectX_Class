@@ -265,9 +265,7 @@ void Loader::ReadBoneData(aiNode * node, int index, int parent)
 	else
 		temp = bones[parent]->Transform;
 
-	D3DXMatrixInverse(&bone->Transform, NULL, &bone->Transform);
-	bone->Transform = temp * bone->Transform;
-
+	bone->Transform = bone->Transform * temp;
 	bones.push_back(bone);
 
 	ReadMeshData(node, index);

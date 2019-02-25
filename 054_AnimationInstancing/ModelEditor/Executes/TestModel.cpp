@@ -6,15 +6,15 @@ void TestModel::Initialize()
 {
 	Loader* loader = NULL;
 
-	//Tank/Tank.fbx
-	loader = new Loader
-	(
-		Assets + L"Tank/Tank.fbx",
-		Models + L"Tank/", L"Tank"
-	);
-	//loader->ExportMaterial();
-	loader->ExportMesh();
-	SAFE_DELETE(loader);
+	////Tank/Tank.fbx
+	//loader = new Loader
+	//(
+	//	Assets + L"Tank/Tank.fbx",
+	//	Models + L"Tank/", L"Tank"
+	//);
+	////loader->ExportMaterial();
+	//loader->ExportMesh();
+	//SAFE_DELETE(loader);
 }
 
 void TestModel::Ready()

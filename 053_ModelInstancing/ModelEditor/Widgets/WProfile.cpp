@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "WProfile.h"
-#include "Executes\TestVertex.h"
+#include "Executes\TestModel.h"
 
 WProfile::WProfile()
 {

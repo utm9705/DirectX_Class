@@ -1,32 +1,18 @@
 #pragma once
+#include "ModelInstance.h"
 
-#define MAX_INST_MODEL 100
-
-class ModelAnimInstance
+class ModelAnimInstance : public ModelInstance
 {
 public:
 	ModelAnimInstance(Model* model, ModelClip* clip,wstring shaderFile);
-	ModelAnimInstance();
+	~ModelAnimInstance();
 
-	void Ready();
+	void Render() override;
 
-	UINT AddWorld(D3DMATRIX& world);
-
-	void Render();
+protected:
+	void MappedData() override;
 
 private:
-	class Model* model;
-
-	UINT maxCount;
-	D3DXMATRIX** transforms;
-
-	ID3D11Texture2D* texture;
-	ID3D11ShaderResourceView* srv;
-
-	ID3D11Texture2D* animTexture;
-	ID3D11ShaderResourceView* animSrv;
-
-	D3DXMATRIX worlds[MAX_INST_MODEL];
 	class ModelClip* clip;
 
 	struct FrameDesc

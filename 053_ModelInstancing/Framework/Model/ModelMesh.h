@@ -8,6 +8,7 @@ public:
 
 public:
 	void Render();
+	void RenderInstance(UINT count);
 
 	wstring Name() { return name; }
 
@@ -21,6 +22,8 @@ public:
 	ID3D11Buffer* VertexBuffer() { return vertexBuffer; }
 	VertexTextureNormalBlend* Vertices() { return vertices; }
 	UINT VertexCount() { return vertexCount; }
+
+	ID3D11Buffer* InstanceBuffer() { return instanceBuffer; }
 
 private:
 	void Binding();
@@ -44,4 +47,6 @@ private:
 	UINT indexCount;
 	UINT* indices;
 	ID3D11Buffer* indexBuffer;
+
+	ID3D11Buffer* instanceBuffer;
 };

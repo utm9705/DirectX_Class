@@ -3,48 +3,47 @@
 #include "Model/ModelClip.h"
 
 ModelAnimInstance::ModelAnimInstance(Model * model, ModelClip* clip, wstring shaderFile)
-	: maxCount(0), model(model), clip(clip)
+	: ModelInstance(model, shaderFile)
+	, clip(clip)
 {
-	for (Material* material : model->Materials())
-		material->SetShader(shaderFile);
+	height = clip->FrameCount();
 
 	ZeroMemory(frames, sizeof(FrameDesc) * MAX_INST_MODEL);
 }
 
-ModelAnimInstance::ModelAnimInstance()
+ModelAnimInstance::~ModelAnimInstance()
 {
-	for (UINT i = 0; i < clip->FrameCount(); i++)
-		SAFE_DELETE_ARRAY(transforms[i]);
-	SAFE_DELETE_ARRAY(transforms);
-
-	SAFE_RELEASE(texture);
-	SAFE_RELEASE(srv);
 }
 
-void ModelAnimInstance::Ready()
+void ModelAnimInstance::Render()
 {
-	D3D11_TEXTURE2D_DESC desc;
-	ZeroMemory(&desc, sizeof(D3D11_TEXTURE2D_DESC));
-	desc.Width = 128 * 4;
-	desc.Height = clip->FrameCount();
-	desc.MipLevels = 1;
-	desc.ArraySize = 1;
-	desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	desc.SampleDesc.Count = 1;
-	desc.SampleDesc.Quality = 0;
-	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	desc.Usage = D3D11_USAGE_DYNAMIC;
-	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	for (UINT i = 0; i < maxCount; i++)
+	{
+		frames[i].FrameTime += Time::Delta();
 
-	HRESULT hr = D3D::GetDevice()->CreateTexture2D(&desc, NULL, &texture);
-	assert(SUCCEEDED(hr));
+		float invFrameRate = 1.0f / clip->FrameRate();
+		if (frames[i].FrameTime > invFrameRate)
+		{
+			frames[i].FrameTime = 0.0f;
 
-	CsResource::CreateSrv(texture, &srv);
+			frames[i].Curr = (frames[i].Curr + 1) % clip->FrameCount();
+			frames[i].Next = (frames[i].Curr + 1) % clip->FrameCount();
+		}
 
+		frames[i].Time = frames[i].FrameTime / invFrameRate;
+	}//for(i)
 
+	for (Material* material : model->Materials())
+		material->GetShader()->Variable("Frames")->SetRawValue(frames, 0, sizeof(FrameDesc) * MAX_INST_MODEL);
+
+	__super::Render();
+}
+
+void ModelAnimInstance::MappedData()
+{
 	//Map
 	{
-		transforms = new D3DXMATRIX*[clip->FrameCount()];
+		transforms = new D3DXMATRIX*[height];
 		for (UINT i = 0; i < clip->FrameCount(); i++)
 			transforms[i] = new D3DXMATRIX[128];
 
@@ -100,55 +99,4 @@ void ModelAnimInstance::Ready()
 		}
 		D3D::GetDC()->Unmap(texture, 0);
 	}
-}
-
-UINT ModelAnimInstance::AddWorld(D3DMATRIX & world)
-{
-	memcpy(&worlds[maxCount], &world, sizeof(D3DXMATRIX));
-
-	maxCount++;
-
-
-	D3D11_MAPPED_SUBRESOURCE subResource;
-	for (UINT i = 0; i < model->MeshCount(); i++)
-	{
-		ID3D11Buffer* instance = model->MeshByIndex(i)->InstanceBuffer();
-
-		D3D::GetDC()->Map(instance, 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
-		{
-			memcpy(subResource.pData, worlds, sizeof(D3DXMATRIX) * maxCount);
-		}
-		D3D::GetDC()->Unmap(instance, 0);
-	}
-
-	for (Material* material : model->Materials())
-		material->GetShader()->AsShaderResource("Transforms")->SetResource(srv);
-
-
-	return maxCount - 1;
-}
-
-void ModelAnimInstance::Render()
-{
-	for (UINT i = 0; i < maxCount; i++)
-	{
-		frames[i].FrameTime += Time::Delta();
-
-		float invFrameRate = 1.0f / clip->FrameRate();
-		if (frames[i].FrameTime > invFrameRate)
-		{
-			frames[i].FrameTime = 0.0f;
-
-			frames[i].Curr = (frames[i].Curr + 1) % clip->FrameCount();
-			frames[i].Next = (frames[i].Curr + 1) % clip->FrameCount();
-		}
-
-		frames[i].Time = frames[i].FrameTime / invFrameRate;
-	}//for(i)
-
-	for (Material* material : model->Materials())
-		material->GetShader()->Variable("Frames")->SetRawValue(frames, 0, sizeof(FrameDesc) * MAX_INST_MODEL);
-
-	for (ModelMesh* mesh : model->Meshes())
-		mesh->RenderInstance(maxCount);
 }

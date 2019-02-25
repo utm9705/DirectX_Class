@@ -92,3 +92,6 @@ const wstring Models = L"../../_Models/";
 
 #include "./Objects/GameModel.h"
 #include "./Objects/GameAnimator.h"
+
+#include "./Model/Model.h"
+#include "./Model/ModelInstance.h"

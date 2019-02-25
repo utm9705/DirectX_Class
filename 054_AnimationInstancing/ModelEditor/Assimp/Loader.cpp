@@ -283,7 +283,7 @@ void Loader::ReadBoneData(aiNode * node, int index, int parent)
 
 	ReadMeshData(node, index);
 
-	for (int i = 0; i < node->mNumChildren; i++)
+	for (UINT i = 0; i < node->mNumChildren; i++)
 		ReadBoneData(node->mChildren[i], bones.size(), index);
 }
 
@@ -459,8 +459,8 @@ AsClip * Loader::ReadClipData(UINT index)
 
 	AsClip* clip = new AsClip();
 
-	clip->FrameCount = ani->mDuration + 1;
-	clip->FrameRate = ani->mTicksPerSecond;
+	clip->FrameCount = (UINT)ani->mDuration + 1;
+	clip->FrameRate = (float)ani->mTicksPerSecond;
 
 	clip->Name = ani->mName.C_Str();
 
@@ -482,7 +482,7 @@ AsClip * Loader::ReadClipData(UINT index)
 			bool bFound = false;
 			UINT t = aniNodeInfo.Keyframe.size();
 			//if (aniNode->mNumPositionKeys > k) {
-			if (fabsf(aniNode->mPositionKeys[k].mTime - t) <= D3DX_16F_EPSILON) {
+			if (fabsf((float)aniNode->mPositionKeys[k].mTime - t) <= D3DX_16F_EPSILON) {
 				aiVectorKey posKey = aniNode->mPositionKeys[k];
 
 				memcpy_s(&frameData.Translation, sizeof(frameData.Translation),
@@ -492,7 +492,7 @@ AsClip * Loader::ReadClipData(UINT index)
 			}
 
 			//if (aniNode->mNumRotationKeys > k) {
-			if (fabsf(aniNode->mRotationKeys[k].mTime - t) <= D3DX_16F_EPSILON) {
+			if (fabsf((float)aniNode->mRotationKeys[k].mTime - t) <= D3DX_16F_EPSILON) {
 				aiQuatKey rotKey = aniNode->mRotationKeys[k];
 
 				frameData.Rotation.x = rotKey.mValue.x;
@@ -504,7 +504,7 @@ AsClip * Loader::ReadClipData(UINT index)
 			}
 
 			//if (aniNode->mNumScalingKeys > k) {
-			if (fabsf(aniNode->mScalingKeys[k].mTime - t) <= D3DX_16F_EPSILON) {
+			if (fabsf((float)aniNode->mScalingKeys[k].mTime - t) <= D3DX_16F_EPSILON) {
 				aiVectorKey scaleKey = aniNode->mScalingKeys[k];
 
 				memcpy_s(&frameData.Scale, sizeof(frameData.Scale), &scaleKey.mValue, sizeof(scaleKey.mValue));
@@ -578,7 +578,7 @@ void Loader::ReadKeyframeData(AsClip * clip, aiNode * node, vector<struct AsAniN
 			D3DXMatrixTranspose(&transform, &transform);
 
 			D3DXMatrixDecompose(&frameData.Scale, &frameData.Rotation, &frameData.Translation, &transform);
-			frameData.Time = i;
+			frameData.Time = (float)i;
 		}
 
 		keyframe->Transforms.push_back(frameData);
