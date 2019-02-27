@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClInclude Include="Assimp\Loader.h" />
     <ClInclude Include="Assimp\Type.h" />
+    <ClInclude Include="Executes\TestRect.h" />
+    <ClInclude Include="Executes\TestRectDistance.h" />
     <ClInclude Include="Executes\TestTriangle.h" />
     <ClInclude Include="Fbx\FbxLoader.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -38,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Assimp\Loader.cpp" />
+    <ClCompile Include="Executes\TestRect.cpp" />
+    <ClCompile Include="Executes\TestRectDistance.cpp" />
     <ClCompile Include="Executes\TestTriangle.cpp" />
     <ClCompile Include="Fbx\FbxLoader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

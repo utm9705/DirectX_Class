@@ -2,9 +2,10 @@
 #include "Main.h"
 #include "Systems/Window.h"
 #include "Viewer/Freedom.h"
+//#include "Executes/TestRect.h"
+//#include "Executes/TestTriangle.h"
+#include "Executes/TestRectDistance.h"
 
-#include "Executes/TestAnimModel.h"
-#include "Executes/TestModel.h"
 
 void Main::Initialize()
 {
@@ -13,8 +14,10 @@ void Main::Initialize()
 	Context::Get()->GetMainCamera()->RotationDegree(0, 0);
 	Context::Get()->GetMainCamera()->Position(0, 0, -5);
 
-	Push(new TestAnimModel());
-	Push(new TestModel());
+	//Push(new TestTriangle());
+	//Push(new TestRect);
+	Push(new TestRectDistance);
+	
 }
 
 void Main::Ready()

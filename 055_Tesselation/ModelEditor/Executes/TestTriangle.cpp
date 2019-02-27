@@ -30,6 +30,16 @@ void TestTriangle::Update()
 	D3DXMatrixIdentity(&W);
 
 	shader->AsMatrix("World")->SetMatrix(W);
+
+	static UINT amount = 1;
+	static UINT inside = 1;
+	
+	ImGui::SliderInt("Amount", (int *)&amount, 1, 10);
+	ImGui::SliderInt("Inside", (int *)&inside, 1, 10);
+
+	shader->AsScalar("TsAmount")->SetInt(amount);
+	shader->AsScalar("TsAmountInside")->SetInt(inside);
+
 }
 
 void TestTriangle::PreRender()

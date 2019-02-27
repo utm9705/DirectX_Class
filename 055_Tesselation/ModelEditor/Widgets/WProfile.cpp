@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "WProfile.h"
-#include "Executes\TestModel.h"
+#include "Executes\TestTriangle.h"
 
 WProfile::WProfile()
 {
