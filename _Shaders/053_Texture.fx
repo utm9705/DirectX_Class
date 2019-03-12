@@ -2,10 +2,10 @@
 
 struct VertexInput
 {
-	float4 Position :Position;
+    float4 Position : Position0;
     uint Id : SV_VertexID0;
 
-	float4 Color : Instance0;
+    float4 Color : Instance0;
     uint InstId : SV_InstanceID0;
 };
 
@@ -27,10 +27,11 @@ VertexOuput VS(VertexInput input)
     position.z = WorldData.Load(uint3(11, input.InstId, 0)).z;
 
 
+
     output.Position.xyz = input.Position.xyz + position;
     output.Position.w = 1.0f;
 
-	output.Color = input.Color;
+    output.Color = input.Color;
     output.Id = input.Id;
 
     return output;
@@ -41,7 +42,7 @@ VertexOuput VS(VertexInput input)
 
 float4 PS(VertexOuput input) : SV_TARGET
 {
-	return input.Color;
+    return input.Color;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -12,12 +12,13 @@ struct FrameDesc
 };
 FrameDesc Frames[MAX_INST_MODEL];
 
+
 struct VertexInput
 {
-	float4 Position :Position;
+    float4 Position : Position0;
     float2 Uv : Uv0;
     float3 Normal : Normal0;
-    float4 BlendIndicies : BlendIndicies0;
+    float4 BlendIndices : BlendIndicies0;
     float4 BlendWeights : BlendWeights0;
 
     matrix Transform : Instance0;
@@ -40,10 +41,10 @@ VertexOutput VS(VertexInput input)
 
     float boneIndices[4] =
     {
-        input.BlendIndicies.x,
-        input.BlendIndicies.y,
-        input.BlendIndicies.z,
-        input.BlendIndicies.w,
+        input.BlendIndices.x,
+        input.BlendIndices.y,
+        input.BlendIndices.z,
+        input.BlendIndices.w,
     };
 
     float boneWeights[4] =
@@ -66,8 +67,8 @@ VertexOutput VS(VertexInput input)
         c1 = Transforms.Load(uint3(boneIndices[i] * 4 + 1, Frames[input.InstId].Curr, 0));
         c2 = Transforms.Load(uint3(boneIndices[i] * 4 + 2, Frames[input.InstId].Curr, 0));
         c3 = Transforms.Load(uint3(boneIndices[i] * 4 + 3, Frames[input.InstId].Curr, 0));
-        curr = matrix(c0, c1, c2, c3);                                       
-                                                                             
+        curr = matrix(c0, c1, c2, c3);
+
         n0 = Transforms.Load(uint3(boneIndices[i] * 4 + 0, Frames[input.InstId].Next, 0));
         n1 = Transforms.Load(uint3(boneIndices[i] * 4 + 1, Frames[input.InstId].Next, 0));
         n2 = Transforms.Load(uint3(boneIndices[i] * 4 + 2, Frames[input.InstId].Next, 0));

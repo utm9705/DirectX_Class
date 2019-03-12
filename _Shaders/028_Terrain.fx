@@ -1,4 +1,4 @@
-#include "000_Header.fx"
+#include "000_Header_N.fx"
 
 //-----------------------------------------------------------------------------
 // Vertex Shader
@@ -27,11 +27,12 @@ VertexOuput VS(VertexTextureNormal input)
 //-----------------------------------------------------------------------------
 // Pixel Shader
 //-----------------------------------------------------------------------------
+Texture2D BaseMap;
 SamplerState Sampler;
 
 float4 PS(VertexOuput input) : SV_TARGET
 {
-    float4 diffuse = DiffuseMap.Sample(Sampler, input.Uv);
+    float4 diffuse = BaseMap.Sample(Sampler, input.Uv);
 
     float3 direction = normalize(-LightDirection);
     float NdotL = dot(direction, input.Normal);

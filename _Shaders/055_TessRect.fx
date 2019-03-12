@@ -1,7 +1,7 @@
 #include "000_Header.fx"
 
-uint TsAmount = 1;
-uint TsAmountInside = 1;
+uint TsAmount = 2;
+uint TsAmountInside = 2;
 
 struct VertexOutput
 {
@@ -67,7 +67,6 @@ DomainOutput DS(ConstantHullOutput input, float2 uv : SV_DomainLocation, const O
 {
     DomainOutput output;
 
-    //float3 position = uvw.x * patch[0].Position + uvw.y * patch[1].Position + uvw.z * patch[2].Position;
     float3 v1 = lerp(patch[0].Position.xyz, patch[1].Position.xyz, 1 - uv.y);
     float3 v2 = lerp(patch[2].Position.xyz, patch[3].Position.xyz, 1 - uv.y);
     float3 position = lerp(v1, v2, uv.x);

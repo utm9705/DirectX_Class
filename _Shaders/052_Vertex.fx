@@ -2,8 +2,8 @@
 
 struct VertexInput
 {
-	float4 Position :Position;
-	float4 Color : Color0;
+    float4 Position : Position0;
+    float4 Color : Color0;
 };
 
 struct VertexOuput
@@ -20,7 +20,7 @@ VertexOuput VS(VertexInput input)
     output.Position = mul(output.Position, View);
     output.Position = mul(output.Position, Projection);
 
-	output.Color = input.Color;
+    output.Color = input.Color;
 
     return output;
 }
@@ -30,7 +30,7 @@ VertexOuput VS(VertexInput input)
 
 float4 PS(VertexOuput input) : SV_TARGET
 {
-	return input.Color;
+    return input.Color;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

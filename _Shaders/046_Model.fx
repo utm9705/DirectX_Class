@@ -31,6 +31,8 @@ float4 PS(VertexOuput input) : SV_TARGET
     float4 diffuse = DiffuseMap.Sample(Sampler, input.Uv);
 
     return diffuse;
+
+    //return float4(1, 0, 0, 1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

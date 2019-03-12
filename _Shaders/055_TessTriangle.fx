@@ -1,6 +1,6 @@
 #include "000_Header.fx"
 
-uint TsAmount = 1;
+uint TsAmount = 2;
 uint TsAmountInside = 2;
 
 struct VertexOutput
@@ -46,7 +46,7 @@ struct HullOutput
 [outputtopology("triangle_cw")]
 [outputcontrolpoints(3)]
 [patchconstantfunc("HS_Constant")]
-HullOutput HS(InputPatch<VertexOutput, 3> input, uint pointID : SV_OutputControlPointID)//Point ID 정점번호
+HullOutput HS(InputPatch<VertexOutput, 3> input, uint pointID : SV_OutputControlPointID)
 {
     HullOutput output;
     output.Position = input[pointID].Position;
@@ -65,7 +65,6 @@ DomainOutput DS(ConstantHullOutput input, float3 uvw : SV_DomainLocation, const 
 {
     DomainOutput output;
 
-    //Bezier Patches수식(삼각형 식)
     float3 position = uvw.x * patch[0].Position + uvw.y * patch[1].Position + uvw.z * patch[2].Position;
 
     output.Position = mul(float4(position, 1), World);

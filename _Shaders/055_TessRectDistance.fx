@@ -26,15 +26,15 @@ struct ConstantHullOutput
 float ComputeAmount(float3 position)
 {
     float dist = distance(position, ViewPosition);
-    float s = saturate((dist - Ratio) / (50 - Ratio));
+    float s = saturate((dist - Ratio) / (10 - Ratio));
 
-    return lerp(MaxPiece, 1, s);
+    return lerp(1, MaxPiece, s);
 }
 
 ConstantHullOutput HS_Constant(InputPatch<VertexOutput, 4> input)
 {
     ConstantHullOutput output;
-   
+    
     float3 center = 0;
     center = (input[0].Position + input[1].Position) * 0.5f;
     output.Edge[0] = ComputeAmount(center);
@@ -52,7 +52,7 @@ ConstantHullOutput HS_Constant(InputPatch<VertexOutput, 4> input)
     center = (input[0].Position + input[1].Position + input[2].Position + input[3].Position) * 0.25f;
     output.Inside[0] = ComputeAmount(center);
     output.Inside[1] = output.Inside[0];
-
+    
     return output;
 }
 
@@ -86,7 +86,6 @@ DomainOutput DS(ConstantHullOutput input, float2 uv : SV_DomainLocation, const O
 {
     DomainOutput output;
 
-    //float3 position = uvw.x * patch[0].Position + uvw.y * patch[1].Position + uvw.z * patch[2].Position;
     float3 v1 = lerp(patch[0].Position.xyz, patch[1].Position.xyz, 1 - uv.y);
     float3 v2 = lerp(patch[2].Position.xyz, patch[3].Position.xyz, 1 - uv.y);
     float3 position = lerp(v1, v2, uv.x);
