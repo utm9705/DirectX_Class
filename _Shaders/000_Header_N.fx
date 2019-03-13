@@ -14,8 +14,6 @@ cbuffer CB_PerFrame
     float Time;
 
     float3 LightPosition;
-
-  
 }
 
 cbuffer CB_Material
@@ -131,10 +129,9 @@ float4 WorldPosition(float4 position)
     return mul(position, World);
 }
 
-
 float3 ViewPosition()
 {
-    return ViewInverse._41_41_43;
+    return ViewInverse._41_42_43;
 }
 
 float3 ViewPosition(float3 position)

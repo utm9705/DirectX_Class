@@ -55,7 +55,7 @@ float4 PS(VertexOuput input) : SV_TARGET
     float4 normalMap = NormalMap.Sample(Sampler, input.Uv);
 
     float intensity = 1;
-    intensity = saturate((dot(normalize(input.Normal), -LightDirection)));
+    intensity = saturate(dot(normalize(input.Normal), -LightDirection));
     
     //[flatten]
     //if (length(normalMap) > 0)
@@ -65,14 +65,23 @@ float4 PS(VertexOuput input) : SV_TARGET
     //}
 
     return diffuseMap * intensity;
+    return float4(input.Uv, 0, 1);
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+
+RasterizerState RS
+{
+    FillMode = Wireframe;
+};
 
 technique11 T0
 {
     pass P0
     {
+        SetRasterizerState(RS);
+
         SetVertexShader(CompileShader(vs_5_0, VS_Model()));
         SetPixelShader(CompileShader(ps_5_0, PS()));
     }

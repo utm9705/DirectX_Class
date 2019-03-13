@@ -137,7 +137,6 @@ float4 PS(DomainOutput_Terrain input) : SV_TARGET
     float NdotL = dot(normalize(normalW), -LightDirection);
 
     return diffuse * NdotL;
-  
 }
 
 ///////////////////////////////////////////////////////////////////////////////
