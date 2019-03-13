@@ -14,10 +14,12 @@ void Test::Initialize()
 	
 	Terrain::InitializeInfo terrainInfo;
 	terrainInfo.shader = new Shader(L"057_Terrain_Tesselation.fx");
-	terrainInfo.heightMap = L"Terrain.png";
+	//terrainInfo.heightMap = L"Terrain.png";
+	//terrainInfo.HeightRatio = 100;
+	terrainInfo.heightMap = L"HeightMap256.png";
+	terrainInfo.HeightRatio = 20;
 		
 	terrain = new Terrain(terrainInfo);
-	
 }
 
 void Test::Ready()
