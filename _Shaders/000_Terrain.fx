@@ -58,26 +58,6 @@ cbuffer CB_GridLine
     float GridLineSize;
 };
 
-//float3 GetGridLineColor(float3 position)
-//{
-//    if (VisibleGridLine == 0)
-//        return float3(0, 0, 0);
-
-//    float2 grid = position.xz / GridLineSize;
-//    grid = frac(grid);
-//    //grid = abs(frac(grid - 0.5f) - 0.5f);
-
-//    return float3(grid, 0);
-    
-//    float thick = GridLineThickness / GridLineSize;
-
-//    [flatten]
-//    if (grid.x < thick || grid.y < thick)
-//        return GridLineColor.rgb;
-
-//    return float3(0, 0, 0);
-//}
-
 float3 GetGridLineColor(float3 position)
 {
     if (VisibleGridLine == 0)
@@ -95,7 +75,7 @@ float3 GetGridLineColor(float3 position)
 }
 
 //-----------------------------------------------------------------------------
-// Tessellation
+// Tesselation
 //-----------------------------------------------------------------------------
 cbuffer CB_Terrain
 {
@@ -107,10 +87,10 @@ cbuffer CB_Terrain
     float TexelCellSpaceU;
     float TexelCellSpaceV;
     float WorldCellSpace;
+    float HeightRatio;
 
-    float2 TexScale = 66.0f;
-
-    float CB_Terrain_Padding[3];
+    float2 TexScale;
+    float CB_Terrain_Padding2[2];
 
     float4 WorldFrustumPlanes[6];
 };
@@ -119,14 +99,20 @@ struct VertexInput_Terrain
 {
     float4 Position : Position0;
     float2 Uv : Uv0;
-    float2 BoundY : Bound0;
+    float2 BoundY : BoundY0;
 };
 
 struct VertexOutput_Terrain
 {
     float4 Position : Position0;
     float2 Uv : Uv0;
-    float2 BoundY : Bound0;
+    float2 BoundY : BoundY0;
+};
+
+struct ConstantHullOutput_Terrain
+{
+    float Edge[4] : SV_TessFactor;
+    float Inside[2] : SV_InsideTessFactor;
 };
 
 struct HullOutput_Terrain
@@ -141,12 +127,6 @@ struct DomainOutput_Terrain
     float3 wPosition : Position1;
     float2 Uv : Uv0;
     float2 TiledUv : Uv1;
-};
-
-struct ConstantHullOutput_Terrain
-{
-    float Edge[4] : SV_TessFactor;
-    float Inside[2] : SV_InsideTessFactor;
 };
 
 bool AabbBehindPlaneTest(float3 center, float3 extents, float4 plane)
@@ -173,7 +153,7 @@ bool AabbOutsideFrustumTest(float3 center, float3 extents)
 
 float TerrainTessFactor(float3 position, float3 viewPosition)
 {
-float d = distance(position, viewPosition);
+    float d = distance(position, viewPosition);
     float s = saturate((d - MinDistance) / (MaxDistance - MinDistance));
 
     return pow(2, lerp(MaxTessellation, MinTessellation, s));

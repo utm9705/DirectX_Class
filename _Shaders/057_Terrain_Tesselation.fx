@@ -4,7 +4,7 @@
 Texture2D HeightMap;
 SamplerState HeightMapSampler
 {
-    Filter = MIN_MAG_LINEAR_MIP_POINT;
+    Filter = MIN_MAG_MIP_LINEAR;
 };
 
 VertexOutput_Terrain VS(VertexInput_Terrain input)
@@ -37,14 +37,14 @@ ConstantHullOutput_Terrain HS_Constant(InputPatch<VertexOutput_Terrain, 4> input
         output.Edge[1] = 0.0f;
         output.Edge[2] = 0.0f;
         output.Edge[3] = 0.0f;
-        
+
         output.Inside[0] = 0.0f;
         output.Inside[1] = 0.0f;
 
         return output;
     }
 
-
+    
     float3 e0 = (input[0].Position + input[2].Position).xyz * 0.5f;
     float3 e1 = (input[0].Position + input[1].Position).xyz * 0.5f;
     float3 e2 = (input[1].Position + input[3].Position).xyz * 0.5f;
@@ -97,7 +97,7 @@ DomainOutput_Terrain DS
     output.Uv = lerp(uv0, uv1, uv.y);
 
 
-    output.wPosition.y = HeightMap.SampleLevel(HeightMapSampler, output.Uv, 0).b;
+    output.wPosition.y = HeightMap.SampleLevel(HeightMapSampler, output.Uv, 0).b * HeightRatio;
 
     output.Position = mul(float4(output.wPosition, 1), View);
     output.Position = mul(output.Position, Projection);
@@ -106,6 +106,7 @@ DomainOutput_Terrain DS
 
     return output;
 }
+
 
 SamplerState LinearSampler
 {
@@ -122,32 +123,21 @@ float4 PS(DomainOutput_Terrain input) : SV_TARGET
     float2 top = input.Uv + float2(0.0f, -TexelCellSpaceV);
     float2 bottom = input.Uv + float2(0.0f, TexelCellSpaceV);
 
-    float leftY = HeightMap.SampleLevel(HeightMapSampler, left, 0).b;
-    float rightY = HeightMap.SampleLevel(HeightMapSampler, right, 0).b;
-    float topY = HeightMap.SampleLevel(HeightMapSampler, top, 0).b;
-    float bottomY = HeightMap.SampleLevel(HeightMapSampler, bottom, 0).b;
+    float leftY = HeightMap.SampleLevel(HeightMapSampler, left, 0).b * HeightRatio;
+    float rightY = HeightMap.SampleLevel(HeightMapSampler, right, 0).b * HeightRatio;
+    float topY = HeightMap.SampleLevel(HeightMapSampler, top, 0).b * HeightRatio;
+    float bottomY = HeightMap.SampleLevel(HeightMapSampler, bottom, 0).b * HeightRatio;
 
     float3 tangent = normalize(float3(WorldCellSpace * 2.0f, rightY - leftY, 0.0f));
     float3 biTangent = normalize(float3(0.0f, bottomY - topY, WorldCellSpace * -2.0f));
     float3 normalW = cross(tangent, biTangent);
 
-    //float4 c0 = LayerMapArray.Sample(LinearSampler, float3(input.TiledUv, 0));
-    //float4 c1 = LayerMapArray.Sample(LinearSampler, float3(input.TiledUv, 1));
-    //float4 c2 = LayerMapArray.Sample(LinearSampler, float3(input.TiledUv, 2));
-    //float4 c3 = LayerMapArray.Sample(LinearSampler, float3(input.TiledUv, 3));
-    //float4 c4 = LayerMapArray.Sample(LinearSampler, float3(input.TiledUv, 4));
-    //float4 t = BlendMap.Sample(LinearSampler, input.Uv);
 
-    //float4 color = c0;
-    //color = lerp(color, c1, t.r);
-    //color = lerp(color, c2, t.g);
-    //color = lerp(color, c3, t.b);
-    //color = lerp(color, c4, t.a);
     float4 diffuse = BaseMap.Sample(LinearSampler, input.TiledUv);
     float NdotL = dot(normalize(normalW), -LightDirection);
 
-     //return diffuse * NdotL;
-    return float4(1, 0, 0, 1);
+    return diffuse * NdotL;
+  
 }
 
 ///////////////////////////////////////////////////////////////////////////////
