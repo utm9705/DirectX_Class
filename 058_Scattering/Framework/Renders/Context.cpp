@@ -48,6 +48,8 @@ Context::~Context()
 
 void Context::Update()
 {
+	ImGui::SliderFloat3("Light Direction", (float*)&lightDirection, -1, 1);
+
 	camera->Update();
 }
 

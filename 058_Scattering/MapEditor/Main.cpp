@@ -45,7 +45,22 @@ void Main::PreRender()
 
 void Main::Render()
 {
-	ImGui::LabelText("FPS", "%d", (int)ImGui::GetIO().Framerate);
+	string str = string("Frame Rate : ") + to_string(ImGui::GetIO().Framerate);
+	Gui::Get()->RenderText(5, 5, 1, 1, 1, str);
+
+	D3DXVECTOR3 camPos;
+	Context::Get()->GetCamera()->Position(&camPos);
+
+	D3DXVECTOR2 camDir;
+	Context::Get()->GetCamera()->RotationDegree(&camDir);
+
+	str = "Cam Position : ";
+	str += to_string((int)camPos.x) + ", " + to_string((int)camPos.y) + ", " + to_string((int)camPos.z);
+	Gui::Get()->RenderText(5, 20, 1, 1, 1, str);
+
+	str = "Cam Rotation : ";
+	str += to_string((int)camDir.x) + ", " + to_string((int)camDir.y);
+	Gui::Get()->RenderText(5, 35, 1, 1, 1, str);
 
 	Context::Get()->GetViewport()->RSSetViewport();
 

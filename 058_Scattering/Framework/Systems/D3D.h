@@ -46,6 +46,7 @@ public:
 	}
 
 	void SetRenderTarget(ID3D11RenderTargetView* rtv = NULL, ID3D11DepthStencilView* dsv = NULL);
+	void SetRenderTargets(UINT count, ID3D11RenderTargetView** rtvs, ID3D11DepthStencilView* dsv);
 
 	void Clear(D3DXCOLOR color = D3DXCOLOR(0xFF555566), ID3D11RenderTargetView* rtv = NULL, ID3D11DepthStencilView* dsv = NULL);
 	void Present();

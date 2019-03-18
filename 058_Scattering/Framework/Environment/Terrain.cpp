@@ -3,12 +3,17 @@
 #include "Viewer/Frustum.h"
 
 Terrain::Terrain(InitializeInfo& info)
-	: Renderer(info.shader), info(info), baseTexture(NULL)
+	: Renderer(info.shader), info(info)
+	, baseTexture(NULL), layerTexture(NULL), alphaTexture(NULL)
 {
 	//Pass(1);
 	Topology(D3D11_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST);
 
 	sBaseTexture = shader->AsShaderResource("BaseMap");
+	sLayerTexture = shader->AsShaderResource("LayerMap");
+	sAlphaTexture = shader->AsShaderResource("AlphaMap");
+
+
 	sHeightTexture = shader->AsShaderResource("HeightMap");
 
 	frustum = new Frustum(1000);
@@ -33,6 +38,18 @@ void Terrain::BaseTexture(wstring file)
 
 	baseTexture = new Texture(file);
 	sBaseTexture->SetResource(baseTexture->SRV());
+}
+
+void Terrain::LayerTexture(wstring layer, wstring alpha)
+{
+	SAFE_DELETE(layerTexture);
+	SAFE_DELETE(alphaTexture);
+
+	layerTexture = new Texture(L"Terrain/" + layer);
+	alphaTexture = new Texture(L"Terrain/" + alpha);
+
+	sLayerTexture->SetResource(layerTexture->SRV());
+	sAlphaTexture->SetResource(alphaTexture->SRV());
 }
 
 void Terrain::Ready()
@@ -81,6 +98,12 @@ void Terrain::Render()
 
 	if(baseTexture != NULL)
 		sBaseTexture->SetResource(baseTexture->SRV());
+
+	if (layerTexture != NULL)
+		sLayerTexture->SetResource(layerTexture->SRV());
+
+	if (alphaTexture != NULL)
+		sAlphaTexture->SetResource(alphaTexture->SRV());
 	
 	sBuffer->SetConstantBuffer(buffer->Buffer());
 	shader->DrawIndexed(0, pass, indexCount);

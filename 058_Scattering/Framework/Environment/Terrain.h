@@ -10,6 +10,7 @@ public:
 	~Terrain();
 
 	void BaseTexture(wstring file);
+	void LayerTexture(wstring layer, wstring alpha);
 
 	void Ready();
 	void Update();
@@ -29,7 +30,7 @@ public:
 		Shader* shader;
 
 		wstring heightMap;
-		float CellSpacing = 0.5f;
+		float CellSpacing = 1.0f;
 		UINT CellsPerPatch = 64;
 		float HeightRatio = 20;
 	};
@@ -46,12 +47,12 @@ private:
 	{
 		float MinDistance = 0.0f;
 		float MaxDistance = 1000.0f;
-		float MinTessellation = 0.1f;
-		float MaxTessellation = 6.0f;
+		float MinTessellation = 1.0f;
+		float MaxTessellation = 4.0f;
 
 		float TexelCellSpaceU;
 		float TexelCellSpaceV;
-		float WorldCellSpace = 0.5f;
+		float WorldCellSpace = 1.0f;
 		float HeightRatio = 10.0f;
 
 		D3DXVECTOR2 TexScale = D3DXVECTOR2(1, 1);
@@ -85,5 +86,13 @@ private:
 
 	Texture* baseTexture;
 	ID3DX11EffectShaderResourceVariable* sBaseTexture;
+
+	Texture* layerTexture;
+	ID3DX11EffectShaderResourceVariable* sLayerTexture;
+
+	Texture* alphaTexture;
+	ID3DX11EffectShaderResourceVariable* sAlphaTexture;
+
+
 	ID3DX11EffectShaderResourceVariable* sHeightTexture;
 };

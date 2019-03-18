@@ -43,12 +43,12 @@ void Render2D::Ready()
 {
 	VertexTexture* vertices = new VertexTexture[6];
 
-	vertices[0].Position = D3DXVECTOR3(0, 0, 0);
-	vertices[1].Position = D3DXVECTOR3(0, 1, 0);
-	vertices[2].Position = D3DXVECTOR3(1, 0, 0);
-	vertices[3].Position = D3DXVECTOR3(1, 0, 0);
-	vertices[4].Position = D3DXVECTOR3(0, 1, 0);
-	vertices[5].Position = D3DXVECTOR3(1, 1, 0);
+	vertices[0].Position = D3DXVECTOR3(-0.5f, -0.5f, 0.0f);
+	vertices[1].Position = D3DXVECTOR3(-0.5f, +0.5f, 0.0f);
+	vertices[2].Position = D3DXVECTOR3(+0.5f, -0.5f, 0.0f);
+	vertices[3].Position = D3DXVECTOR3(+0.5f, -0.5f, 0.0f);
+	vertices[4].Position = D3DXVECTOR3(-0.5f, +0.5f, 0.0f);
+	vertices[5].Position = D3DXVECTOR3(+0.5f, +0.5f, 0.0f);
 
 	vertices[0].Uv = D3DXVECTOR2(0, 1);
 	vertices[1].Uv = D3DXVECTOR2(0, 0);

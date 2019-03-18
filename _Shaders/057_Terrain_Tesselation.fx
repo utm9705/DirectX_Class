@@ -134,9 +134,13 @@ float4 PS(DomainOutput_Terrain input) : SV_TARGET
 
 
     float4 diffuse = BaseMap.Sample(LinearSampler, input.TiledUv);
+    float4 alpha = AlphaMap.Sample(LinearSampler, input.TiledUv);
+    float4 layer = LayerMap.Sample(LinearSampler, input.TiledUv);
+
+    float4 color = lerp(diffuse, layer, (1 - alpha) * 0.5f);
     float NdotL = dot(normalize(normalW), -LightDirection);
 
-    return diffuse * NdotL;
+    return color * NdotL;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

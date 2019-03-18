@@ -12,8 +12,8 @@ void Test::Initialize()
 	terrainInfo.shader = new Shader(L"057_Terrain_Tesselation.fx");
 	//terrainInfo.heightMap = L"Terrain.png";
 	//terrainInfo.HeightRatio = 100;
-	terrainInfo.heightMap = L"HeightMap256.png";
-	terrainInfo.HeightRatio = 20;
+	terrainInfo.heightMap = L"Terrain/HeightMap512.png";
+	terrainInfo.HeightRatio = 100;
 		
 	terrain = new Terrain(terrainInfo);
 }
@@ -23,7 +23,8 @@ void Test::Ready()
 	sky->Ready();
 
 	terrain->Ready();
-	terrain->BaseTexture(L"Dirt.png");
+	terrain->BaseTexture(L"Terrain/Dirt.png");
+	terrain->LayerTexture(L"SmallGrass.jpg", L"HeightMap512.png");
 }
 
 void Test::Destroy()
@@ -39,7 +40,7 @@ void Test::Update()
 
 void Test::PreRender()
 {
-
+	sky->PreRender();
 }
 
 void Test::Render()
