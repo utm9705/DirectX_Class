@@ -127,7 +127,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR param, int 
 	desc.Handle = NULL;
 	desc.Width = 1280;
 	desc.Height = 720;
-	desc.Background = D3DXCOLOR(0, 0, 0, 1);
+	desc.Background = D3DXCOLOR(0xFF6B6562);
 	D3D::SetDesc(desc);
 
 

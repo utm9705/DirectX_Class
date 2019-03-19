@@ -58,6 +58,4 @@ void ComputePointLight(Material m, PointLight l, float3 position, float3 normal,
     ambient = float4(0, 0, 0, 0);
     diffuse = float4(0, 0, 0, 0);
     specular = float4(0, 0, 0, 0);
-
-     
 }

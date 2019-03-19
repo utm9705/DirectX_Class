@@ -14,6 +14,13 @@ public:
 	void PostRender();
 
 private:
+	void CreateQuadData();
+	void CreateSphereData();
+	void CreateCloudData();
+
+	void RenderCloud();
+
+private:
 	struct TargetDesc
 	{
 		D3DXVECTOR3 WaveLength = D3DXVECTOR3(0.65f, 0.57f, 0.475f);
@@ -27,10 +34,32 @@ private:
 	} targetDesc;
 
 private:
+	bool realTime;
+
+	float theta, phi;
+	float prevTheta, prevPhi;
+
+
 	CBuffer* targetBuffer;
 	ID3DX11EffectConstantBuffer* sTargetBuffer;
-	class Render2D* render2D;
 
+	class Render2D* render2D;
 	RenderTargetView* mieTarget, *rayleighTarget;
-	Texture* texture;
+
+
+	VertexTexture* vertices;
+
+	ID3D11Buffer* skyVB, *skyIB;
+	UINT skyVC, skyIC;
+	UINT radius, slices, stacks;
+
+	ID3DX11EffectScalarVariable* sStarIntensity;
+
+	Texture* starMap;
+	ID3DX11EffectShaderResourceVariable* sStarMap;
+	ID3DX11EffectShaderResourceVariable* sRayleighMap;
+	ID3DX11EffectShaderResourceVariable* sMieMap;
+
+	ID3D11Texture2D* cloudTexture;
+	ID3D11ShaderResourceView* cloudSrv;
 };
