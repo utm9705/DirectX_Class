@@ -188,6 +188,19 @@ void Renderer::UpdateWorld()
 
 void Renderer::CreateVertexBuffer(void * pData, UINT count, UINT stride, UINT offset)
 {
+	CreateVertexBuffer(pData, count, stride, offset, &vertexBuffer);
+
+	this->stride = stride;
+	this->offset = offset;
+}
+
+void Renderer::CreateIndexBuffer(UINT * pData, UINT count)
+{
+	CreateIndexBuffer(pData, count, &indexBuffer);
+}
+
+void Renderer::CreateVertexBuffer(void * pData, UINT count, UINT stride, UINT offset, ID3D11Buffer ** buffer)
+{
 	D3D11_BUFFER_DESC desc = { 0 };
 	desc.Usage = D3D11_USAGE_DEFAULT;
 	desc.ByteWidth = stride * count;
@@ -196,15 +209,11 @@ void Renderer::CreateVertexBuffer(void * pData, UINT count, UINT stride, UINT of
 	D3D11_SUBRESOURCE_DATA data = { 0 };
 	data.pSysMem = pData;
 
-	HRESULT hr = D3D::GetDevice()->CreateBuffer(&desc, &data, &vertexBuffer);
+	HRESULT hr = D3D::GetDevice()->CreateBuffer(&desc, &data, buffer);
 	assert(SUCCEEDED(hr));
-
-
-	this->stride = stride;
-	this->offset = offset;
 }
 
-void Renderer::CreateIndexBuffer(UINT * pData, UINT count)
+void Renderer::CreateIndexBuffer(UINT * pData, UINT count, ID3D11Buffer ** buffer)
 {
 	D3D11_BUFFER_DESC desc = { 0 };
 	desc.Usage = D3D11_USAGE_IMMUTABLE;
@@ -214,6 +223,6 @@ void Renderer::CreateIndexBuffer(UINT * pData, UINT count)
 	D3D11_SUBRESOURCE_DATA data = { 0 };
 	data.pSysMem = pData;
 
-	HRESULT hr = D3D::GetDevice()->CreateBuffer(&desc, &data, &indexBuffer);
+	HRESULT hr = D3D::GetDevice()->CreateBuffer(&desc, &data, buffer);
 	assert(SUCCEEDED(hr));
 }

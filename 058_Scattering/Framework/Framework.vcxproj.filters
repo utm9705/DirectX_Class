@@ -79,9 +79,6 @@
     <ClCompile Include="Viewer\Camera.cpp">
       <Filter>Viewer</Filter>
     </ClCompile>
-    <ClCompile Include="Viewer\DepthStencilView.cpp">
-      <Filter>Viewer</Filter>
-    </ClCompile>
     <ClCompile Include="Viewer\Fixity.cpp">
       <Filter>Viewer</Filter>
     </ClCompile>
@@ -137,7 +134,16 @@
       <Filter>Renders</Filter>
     </ClCompile>
     <ClCompile Include="Environment\Sky.cpp">
-      <Filter>Environment</Filter>
+      <Filter>Environment\Sky</Filter>
+    </ClCompile>
+    <ClCompile Include="Environment\Scattering.cpp">
+      <Filter>Environment\Sky</Filter>
+    </ClCompile>
+    <ClCompile Include="Environment\SkyDome.cpp">
+      <Filter>Environment\Sky</Filter>
+    </ClCompile>
+    <ClCompile Include="Environment\Cloud.cpp">
+      <Filter>Environment\Sky</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +167,9 @@
     </Filter>
     <Filter Include="Meshes">
       <UniqueIdentifier>{296ed6e2-eb74-4dae-b5d2-a98d0ee9438c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Environment\Sky">
+      <UniqueIdentifier>{1fcb8c02-747b-41ab-a82a-e3ab1a63dfc7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +251,6 @@
     <ClInclude Include="Viewer\Camera.h">
       <Filter>Viewer</Filter>
     </ClInclude>
-    <ClInclude Include="Viewer\DepthStencilView.h">
-      <Filter>Viewer</Filter>
-    </ClInclude>
     <ClInclude Include="Viewer\Fixity.h">
       <Filter>Viewer</Filter>
     </ClInclude>
@@ -304,7 +310,16 @@
       <Filter>Renders</Filter>
     </ClInclude>
     <ClInclude Include="Environment\Sky.h">
-      <Filter>Environment</Filter>
+      <Filter>Environment\Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment\Scattering.h">
+      <Filter>Environment\Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment\SkyDome.h">
+      <Filter>Environment\Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment\Cloud.h">
+      <Filter>Environment\Sky</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

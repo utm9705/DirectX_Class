@@ -65,7 +65,6 @@ using namespace std;
 
 #include "Viewer/Viewport.h"
 #include "Viewer/RenderTargetView.h"
-#include "Viewer/DepthStencilView.h"
 #include "Viewer/Camera.h"
 #include "Viewer/Perspective.h"
 

@@ -171,6 +171,18 @@ DepthStencilState DSS
     DepthEnable = false;
 };
 
+BlendState AlphaBlend
+{
+    BlendEnable[0] = true;
+    DestBlend[0] = INV_SRC_ALPHA;
+    SrcBlend[0] = SRC_ALPHA;
+    BlendOp[0] = Add;
+
+    SrcBlendAlpha[0] = One;
+    DestBlendAlpha[0] = One;
+    RenderTargetWriteMask[0] = 0x0F;
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 
 technique11 T0
@@ -191,6 +203,9 @@ technique11 T0
 
     pass P2
     {
+        SetDepthStencilState(DSS, 0);
+        SetBlendState(AlphaBlend, float4(0, 0, 0, 0), 0xFF);
+
         SetVertexShader(CompileShader(vs_5_0, VS_Cloud()));
         SetPixelShader(CompileShader(ps_5_0, PS_Cloud()));
     }

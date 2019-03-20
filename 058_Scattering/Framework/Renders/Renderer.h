@@ -39,6 +39,9 @@ public:
 
 	D3DXMATRIX& World() { return frameDesc.World; }
 
+	static void CreateVertexBuffer(void* pData, UINT count, UINT stride, UINT offset, ID3D11Buffer** buffer);
+	static void CreateIndexBuffer(UINT* pData, UINT count, ID3D11Buffer** buffer);
+
 protected:
 	virtual void UpdateWorld();
 
