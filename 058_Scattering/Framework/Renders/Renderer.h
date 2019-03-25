@@ -37,6 +37,7 @@ public:
 	virtual void Update();
 	virtual void Render();
 
+	void World(D3DXMATRIX& matrix) { frameDesc.World = matrix; }
 	D3DXMATRIX& World() { return frameDesc.World; }
 
 	static void CreateVertexBuffer(void* pData, UINT count, UINT stride, UINT offset, ID3D11Buffer** buffer);

@@ -93,6 +93,5 @@ private:
 	Texture* alphaTexture;
 	ID3DX11EffectShaderResourceVariable* sAlphaTexture;
 
-
 	ID3DX11EffectShaderResourceVariable* sHeightTexture;
 };

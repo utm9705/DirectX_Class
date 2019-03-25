@@ -19,6 +19,7 @@ private:
 	Shader* shader;
 
 	ID3D11Buffer* vertexBuffer;
+
 	ID3D11Texture2D* texture;
 	ID3D11ShaderResourceView* srv;
 };

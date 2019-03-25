@@ -2,7 +2,7 @@
 #include "Cloud.h"
 
 Cloud::Cloud(Shader * shader)
-	: shader(shader)
+	: shader(shader), texture(NULL), srv(NULL)
 {
 
 }
@@ -10,6 +10,7 @@ Cloud::Cloud(Shader * shader)
 Cloud::~Cloud()
 {
 	SAFE_RELEASE(vertexBuffer);
+
 	SAFE_RELEASE(texture);
 	SAFE_RELEASE(srv);
 }
@@ -106,7 +107,9 @@ void Cloud::CreateTexture()
 			color.b = (float)(gradValues[value & 0x0F + 2] * 64 + 64);
 			color.a = (float)value;
 
-			pixels[y * 256 + x] = color;
+			
+			UINT index = desc.Width * y + x;
+			pixels[index] = color;
 		}
 	}
 

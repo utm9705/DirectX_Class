@@ -4,9 +4,6 @@
     <ClCompile Include="Environment\Terrain.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
-    <ClCompile Include="Environment\CubeSky.cpp">
-      <Filter>Environment</Filter>
-    </ClCompile>
     <ClCompile Include="Model\ModelMeshPart.cpp">
       <Filter>Model</Filter>
     </ClCompile>
@@ -136,6 +133,9 @@
     <ClCompile Include="Environment\Sky.cpp">
       <Filter>Environment\Sky</Filter>
     </ClCompile>
+    <ClCompile Include="Environment\CubeSky.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
     <ClCompile Include="Environment\Scattering.cpp">
       <Filter>Environment\Sky</Filter>
     </ClCompile>
@@ -143,6 +143,9 @@
       <Filter>Environment\Sky</Filter>
     </ClCompile>
     <ClCompile Include="Environment\Cloud.cpp">
+      <Filter>Environment\Sky</Filter>
+    </ClCompile>
+    <ClCompile Include="Environment\Moon.cpp">
       <Filter>Environment\Sky</Filter>
     </ClCompile>
   </ItemGroup>
@@ -169,14 +172,11 @@
       <UniqueIdentifier>{296ed6e2-eb74-4dae-b5d2-a98d0ee9438c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Environment\Sky">
-      <UniqueIdentifier>{1fcb8c02-747b-41ab-a82a-e3ab1a63dfc7}</UniqueIdentifier>
+      <UniqueIdentifier>{4ce081a1-6a1d-47a3-aa0e-452ae4783c7d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Environment\Terrain.h">
-      <Filter>Environment</Filter>
-    </ClInclude>
-    <ClInclude Include="Environment\CubeSky.h">
       <Filter>Environment</Filter>
     </ClInclude>
     <ClInclude Include="Model\ModelMeshPart.h">
@@ -312,6 +312,9 @@
     <ClInclude Include="Environment\Sky.h">
       <Filter>Environment\Sky</Filter>
     </ClInclude>
+    <ClInclude Include="Environment\CubeSky.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
     <ClInclude Include="Environment\Scattering.h">
       <Filter>Environment\Sky</Filter>
     </ClInclude>
@@ -319,6 +322,9 @@
       <Filter>Environment\Sky</Filter>
     </ClInclude>
     <ClInclude Include="Environment\Cloud.h">
+      <Filter>Environment\Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment\Moon.h">
       <Filter>Environment\Sky</Filter>
     </ClInclude>
   </ItemGroup>

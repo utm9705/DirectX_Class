@@ -13,7 +13,6 @@ Terrain::Terrain(InitializeInfo& info)
 	sLayerTexture = shader->AsShaderResource("LayerMap");
 	sAlphaTexture = shader->AsShaderResource("AlphaMap");
 
-
 	sHeightTexture = shader->AsShaderResource("HeightMap");
 
 	frustum = new Frustum(1000);
@@ -45,8 +44,9 @@ void Terrain::LayerTexture(wstring layer, wstring alpha)
 	SAFE_DELETE(layerTexture);
 	SAFE_DELETE(alphaTexture);
 
-	layerTexture = new Texture(L"Terrain/" + layer);
-	alphaTexture = new Texture(L"Terrain/" + alpha);
+
+	layerTexture = new Texture(layer);
+	alphaTexture = new Texture(alpha);
 
 	sLayerTexture->SetResource(layerTexture->SRV());
 	sAlphaTexture->SetResource(alphaTexture->SRV());
@@ -104,6 +104,7 @@ void Terrain::Render()
 
 	if (alphaTexture != NULL)
 		sAlphaTexture->SetResource(alphaTexture->SRV());
+
 	
 	sBuffer->SetConstantBuffer(buffer->Buffer());
 	shader->DrawIndexed(0, pass, indexCount);

@@ -62,6 +62,7 @@ void Main::Render()
 	str += to_string((int)camDir.x) + ", " + to_string((int)camDir.y);
 	Gui::Get()->RenderText(5, 35, 1, 1, 1, str);
 
+
 	Context::Get()->GetViewport()->RSSetViewport();
 
 	for (IExecute* exe : executes)

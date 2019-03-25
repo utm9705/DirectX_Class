@@ -13,7 +13,7 @@ void Test::Initialize()
 	//terrainInfo.heightMap = L"Terrain.png";
 	//terrainInfo.HeightRatio = 100;
 	terrainInfo.heightMap = L"Terrain/HeightMap512.png";
-	terrainInfo.HeightRatio = 100;
+	terrainInfo.HeightRatio = 20;
 		
 	terrain = new Terrain(terrainInfo);
 }
@@ -24,7 +24,7 @@ void Test::Ready()
 
 	terrain->Ready();
 	terrain->BaseTexture(L"Terrain/Dirt.png");
-	terrain->LayerTexture(L"SmallGrass.jpg", L"HeightMap512.png");
+	terrain->LayerTexture(L"Terrain/SmallGrass.jpg", L"Terrain/HeightMap512.png");
 }
 
 void Test::Destroy()
