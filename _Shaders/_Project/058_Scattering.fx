@@ -1,6 +1,11 @@
 #include "000_Header_N.fx"
 #include "000_Sky.fx"
 
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+
 VertexOutput_Target VS_Target(VertexTexture input)
 {
     VertexOutput_Target output;
@@ -10,6 +15,7 @@ VertexOutput_Target VS_Target(VertexTexture input)
 
     return output;
 }
+
 
 PixelOutput_Target PS_Target(VertexOutput_Target input)
 {
@@ -77,7 +83,9 @@ PixelOutput_Target PS_Target(VertexOutput_Target input)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-VertexOutput_Scattering VS_Scattering(VertexTexture input)
+
+
+VertexOutput_Scattering VS_Scattering(VertexTextureNormalTangent input)
 {
     VertexOutput_Scattering output;
 
@@ -90,6 +98,7 @@ VertexOutput_Scattering VS_Scattering(VertexTexture input)
 
     return output;
 }
+
 
 float4 PS_Scattering(VertexOutput_Scattering input) : SV_TARGET
 {
@@ -111,7 +120,9 @@ float4 PS_Scattering(VertexOutput_Scattering input) : SV_TARGET
     return float4(color, 1) + StarMap.Sample(SkySampler, input.Uv) * intensity;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
+
 
 VertexOutput_Cloud VS_Cloud(VertexTexture input)
 {
@@ -121,32 +132,38 @@ VertexOutput_Cloud VS_Cloud(VertexTexture input)
     output.Position = mul(output.Position, View);
     output.Position = mul(output.Position, Projection);
 
+    
     output.Uv = (input.Uv * CloudTiles);
     output.oUv = input.Uv;
+
 
     return output;
 }
 
 float4 PS_Cloud(VertexOutput_Cloud input) : SV_Target0
 {
-    input.Uv = input.Uv * CloudTiles;
-
-    float n = Noise(input.Uv + Time * CloudSpeed);
-    float n2 = Noise(input.Uv * 2 + Time * CloudSpeed);
-    float n3 = Noise(input.Uv * 4 + Time * CloudSpeed);
-    float n4 = Noise(input.Uv * 8 + Time * CloudSpeed);
-	
+    float n = Noise(input.Uv + MoonAlpha);
+    float n2 = Noise(input.Uv * 2 + MoonAlpha);
+    float n3 = Noise(input.Uv * 4 + MoonAlpha);
+    float n4 = Noise(input.Uv * 8 + MoonAlpha);
+   
     float nFinal = n + (n2 / 2) + (n3 / 4) + (n4 / 8);
-	
+   
     float c = CloudCover - nFinal;
     if (c < 0) 
         c = 0;
  
-    float density = 1.0 - pow(CloudSharpness, c);
-    float4 color = density;
-    //color *= LightColor;
+    float CloudDensity = 1.0 - pow(CloudSharpness, c);
+
+    float4 retColor = CloudDensity;
     
-    return color;
+    float uvX = abs(0.5f - input.oUv.x) + 0.5f;
+    float uvY = abs(0.5f - input.oUv.y) + 0.5f;
+    
+    retColor.a = uvX > 0.8 ? lerp(0.0f, retColor.a * 0.85f, (1 - uvX) / 0.2f) : retColor.a;
+    retColor.a = uvY > 0.8 ? lerp(0.0f, retColor.a * 0.85f, (1 - uvY) / 0.2f) : retColor.a;
+    
+    return retColor;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -159,20 +176,26 @@ VertexOutput_Moon VS_Moon(VertexTexture input)
     output.Position = mul(output.Position, View);
     output.Position = mul(output.Position, Projection);
 
+    output.oPosition = -input.Position.xyz;
     output.Uv = input.Uv;
 
     return output;
 }
 
-float4 PS_Moon(VertexOutput_Moon input) : SV_Target0
+float4 PS_Moon(VertexOutput_Moon input) : SV_TARGET
 {
-    float4 color = MoonMap.Sample(SkySampler, input.Uv);
+    float4 color = 0;
+
+    color = MoonMap.Sample(SkySampler, input.Uv);
     color.a *= MoonAlpha;
 
     return color;
+
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
+
 
 DepthStencilState DSS
 {
@@ -181,6 +204,8 @@ DepthStencilState DSS
 
 BlendState AlphaBlend
 {
+    AlphaToCoverageEnable = false;
+
     BlendEnable[0] = true;
     DestBlend[0] = INV_SRC_ALPHA;
     SrcBlend[0] = SRC_ALPHA;
@@ -201,9 +226,12 @@ technique11 T0
         SetPixelShader(CompileShader(ps_5_0, PS_Target()));
     }
 
+
     pass P1
     {
+
         SetDepthStencilState(DSS, 0);
+
 
         SetVertexShader(CompileShader(vs_5_0, VS_Scattering()));
         SetPixelShader(CompileShader(ps_5_0, PS_Scattering()));
@@ -211,6 +239,7 @@ technique11 T0
 
     pass P2
     {
+
         SetDepthStencilState(DSS, 0);
         SetBlendState(AlphaBlend, float4(0, 0, 0, 0), 0xFF);
 
@@ -220,9 +249,10 @@ technique11 T0
 
     pass P3
     {
-        SetBlendState(AlphaBlend, float4(0, 0, 0, 0), 0xFF);
-
         SetVertexShader(CompileShader(vs_5_0, VS_Moon()));
         SetPixelShader(CompileShader(ps_5_0, PS_Moon()));
     }
+
+
+
 }

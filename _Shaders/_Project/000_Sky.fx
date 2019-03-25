@@ -27,6 +27,8 @@ SamplerState SkySampler
     Filter = MIN_MAG_MIP_LINEAR;
 };
 
+
+
 ///////////////////////////////////////////////////////////////////////////////
 
 cbuffer CB_Target
@@ -46,12 +48,12 @@ cbuffer CB_Night
     float MoonAlpha = 1.0f;
 };
 
+
 cbuffer CB_Cloud
 {
     float CloudTiles;
     float cloudCover = -0.1f;
     float CloudSharpness = 0.25f;
-    float CloudSpeed = 0.05f;
 };
 
 
@@ -63,11 +65,14 @@ struct VertexOutput_Target
     float2 Uv : Uv0;
 };
 
+
 struct PixelOutput_Target
 {
     float4 R : SV_TARGET0;
     float4 M : SV_TARGET1;
 };
+
+
 
 struct VertexOutput_Scattering
 {
@@ -75,6 +80,8 @@ struct VertexOutput_Scattering
     float2 Uv : UV0;
     float3 oPosition : POSITION1;
 };
+
+
 
 struct VertexOutput_Cloud
 {
@@ -85,20 +92,21 @@ struct VertexOutput_Cloud
 
 struct VertexOutput_Moon
 {
-    float4 Position : SV_POSITION0;
-    float2 Uv : UV0;
+    float4 Position : SV_Position0;
+    float2 Uv : Uv0;
+    float3 oPosition : POSITION1;
 };
 
 Texture2D RayleighMap;
 Texture2D MieMap;
 Texture2D StarMap;
 Texture2D CloudMap;
+
 Texture2D MoonMap;
 
+///////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////
 // target
-///////////////////////////////////////////////////////////////////////////////
 
 float HitOuterSphere(float3 position, float3 direction)
 {
@@ -150,9 +158,7 @@ float2 GetDistance(float3 p1, float3 p2)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////
 // scattering
-///////////////////////////////////////////////////////////////////////////////
 
 float GetRayleighPhase(float c)
 {
@@ -175,15 +181,14 @@ float3 HDR(float3 LDR)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////
 // cloud(noise)
-///////////////////////////////////////////////////////////////////////////////
 
 float Fade(float t)
 {
   // return t*t*(3.0-2.0*t);
     return t * t * t * (t * (t * 6.0 - 15.0) + 10.0);
 }
+
 
 float Noise(float2 P)
 {
@@ -208,3 +213,5 @@ float Noise(float2 P)
 
     return n_xy;
 }
+
+

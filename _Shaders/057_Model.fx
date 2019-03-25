@@ -1,6 +1,8 @@
 #include "000_Header_N.fx"
 #include "000_Model.fx"
 
+float4 Planes = float4(1, 0, 0, 0);
+
 Texture2D Transforms;
 
 struct VertexOuput
@@ -9,6 +11,9 @@ struct VertexOuput
     float3 Normal : Normal0;
     float3 Tangent : Tangent0;
     float2 Uv : Uv0;
+
+    uint InstID : InstanceID0;
+    float Culling : SV_CullDistance0;
 };
 
 VertexOuput VS_Model(VertexModel input)
@@ -24,6 +29,9 @@ VertexOuput VS_Model(VertexModel input)
     output.Tangent = WorldTangent(input.Tangent);
 
     output.Uv = input.Uv;
+    output.InstID = input.InstId;
+
+    output.Culling = dot(mul(input.Position, World), Planes);
 
     return output;
 }
@@ -41,6 +49,9 @@ VertexOuput VS_Animation(VertexModel input)
     output.Tangent = WorldTangent(input.Tangent);
 
     output.Uv = input.Uv;
+    output.InstID = input.InstId;
+
+    output.Culling = dot(mul(input.Position, World), Planes);
 
     return output;
 }
@@ -65,7 +76,8 @@ float4 PS(VertexOuput input) : SV_TARGET
     //}
 
     return diffuseMap * intensity;
-    return float4(input.Uv, 0, 1);
+    //return float4(input.Uv, 0, 1);
+    //return float4(input.InstID / 100.0f, 0, 0, 1);
 
 }
 
@@ -80,7 +92,7 @@ technique11 T0
 {
     pass P0
     {
-        SetRasterizerState(RS);
+        //SetRasterizerState(RS);
 
         SetVertexShader(CompileShader(vs_5_0, VS_Model()));
         SetPixelShader(CompileShader(ps_5_0, PS()));
