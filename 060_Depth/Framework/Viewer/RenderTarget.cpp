@@ -19,13 +19,13 @@ RenderTarget::RenderTarget(UINT width, UINT height)
 
 RenderTarget::~RenderTarget()
 {
-	SAFE_RELEASE(rtvSrv);
 	SAFE_RELEASE(rtv);
 	SAFE_RELEASE(rtvTexture);
-	
-	SAFE_RELEASE(dsvSrv);
+	SAFE_RELEASE(rtvSrv);
+
 	SAFE_RELEASE(dsv);
 	SAFE_RELEASE(dsvTexture);
+	SAFE_RELEASE(dsvSrv);	
 
 	SAFE_DELETE(viewport);
 }
@@ -57,6 +57,7 @@ void RenderTarget::CreateRTV()
 		textureDesc.MipLevels = 1;
 		textureDesc.ArraySize = 1;
 		textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		//textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UINT;
 		textureDesc.SampleDesc.Count = 1;
 		textureDesc.SampleDesc.Quality = 0;
 		textureDesc.Usage = D3D11_USAGE_DEFAULT;

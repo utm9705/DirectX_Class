@@ -26,9 +26,10 @@ VertexOuput VS(VertexTextureNormalTangent input)
     output.Normal = mul(input.Normal, (float3x3) World);
     output.Uv = input.Uv;
 
+
     output.oPosition = mul(input.Position, World);
-    output.oPosition = mul(output.Position, ShadowView);
-    output.oPosition = mul(output.Position, ShadowProjection);
+    output.oPosition = mul(output.oPosition, ShadowView);
+    output.oPosition = mul(output.oPosition, ShadowProjection);
 
     return output;
 }
@@ -39,7 +40,7 @@ float4 PS(VertexOuput input) : SV_TARGET
 {
     float depth = input.oPosition.z / input.oPosition.w;
 
-    return float4(1, 1, 0, 1);
+    return float4(depth, depth, depth, 1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

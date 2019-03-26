@@ -25,6 +25,7 @@ void Frustum::Update()
 	D3DXMATRIX M;
 	D3DXMatrixMultiply(&M, &V, &P);
 
+
 	//Left
 	planes[0].a = M._14 + M._11;
 	planes[0].b = M._24 + M._21;

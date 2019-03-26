@@ -56,11 +56,12 @@ void Mesh::Render()
 	if (diffuseMap != NULL)
 		sDiffuseMap->SetResource(diffuseMap->SRV());
 
+	if (normalMap != NULL)
+		sNormalMap->SetResource(normalMap->SRV());
+
 	if (specularMap != NULL)
 		sSpecularMap->SetResource(specularMap->SRV());
 
-	if (normalMap != NULL)
-		sNormalMap->SetResource(normalMap->SRV());
 
 	shader->DrawIndexed(0, pass, indexCount);
 }

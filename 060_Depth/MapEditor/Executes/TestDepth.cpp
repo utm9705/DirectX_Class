@@ -17,13 +17,15 @@ void TestDepth::Ready()
 	brick = new Texture(L"Bricks.png");
 	wall = new Texture(L"Wall.png");
 
+
 	cube = new MeshCube(shader);
 	cube->Position(0, 5.0f, 0);
-	cube->Scale(20.0f, 10.0f, 20.0f);
+	cube->Scale(20.0f, 10.0f, 20.0);
 
 	grid = new MeshGrid(shader);
 	grid->Position(0, 0, 0);
-	grid->Scale(15, 1, 15);
+	grid->Scale(20, 1, 20);
+
 
 	for (UINT i = 0; i < 5; i++)
 	{
@@ -35,12 +37,13 @@ void TestDepth::Ready()
 		cylinder[i * 2 + 1]->Position(30, 6.0f, -15.0f + (float)i * 15.0f);
 		cylinder[i * 2 + 1]->Scale(5, 5, 5);
 
+
 		sphere[i * 2] = new MeshSphere(shader, 0.5f, 20, 20);
-		sphere[i * 2]->Position(-30.0f, 16.0f, -15.0f + (float)i * 15.0f);
+		sphere[i * 2]->Position(-30.0f, 16.0f, -15.0f + i * 15.0f);
 		sphere[i * 2]->Scale(5, 5, 5);
 
 		sphere[i * 2 + 1] = new MeshSphere(shader, 0.5f, 20, 20);
-		sphere[i * 2 + 1]->Position(30.0f, 16.0f, -15.0f + (float)i * 15.0f);
+		sphere[i * 2 + 1]->Position(30.0f, 16.0f, -15.0f + i * 15.0f);
 		sphere[i * 2 + 1]->Scale(5, 5, 5);
 	}
 
@@ -64,7 +67,7 @@ void TestDepth::Update()
 		sphere[i]->Update();
 		cylinder[i]->Update();
 	}
-
+	
 	cube->Update();
 	grid->Update();
 }
@@ -72,7 +75,7 @@ void TestDepth::Update()
 void TestDepth::PreRender()
 {
 	shadow->PreRender();
-
+	
 	for (UINT i = 0; i < 10; i++)
 	{
 		sphere[i]->Render();

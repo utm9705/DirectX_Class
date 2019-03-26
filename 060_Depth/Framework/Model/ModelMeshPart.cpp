@@ -5,7 +5,6 @@
 ModelMeshPart::ModelMeshPart()
 	: material(NULL)
 {
-	planes = D3DXPLANE(1, 0, 0, 0);
 }
 
 ModelMeshPart::~ModelMeshPart()
@@ -31,6 +30,7 @@ void ModelMeshPart::Render()
 {
 	material->Render();
 
+	//parent->GetShader()->AsVector("Planes")->SetFloatVector(planes);
 	parent->GetShader()->DrawIndexed(0, parent->Pass(), indexCount, startIndex, 0);
 }
 

@@ -10,7 +10,6 @@ public:
 
 private:
 	Shader* shader;
-	vector<Mesh* > meshes;
 
 	class Fixity* fixity;
 	class Perspective* perspective;

@@ -9,7 +9,7 @@ void Test::Initialize()
 
 	
 	Terrain::InitializeInfo terrainInfo;
-	terrainInfo.shader = new Shader(L"057_Terrain_Tess.fx");
+	terrainInfo.shader = new Shader(L"057_Terrain_Tesselation.fx");
 	//terrainInfo.heightMap = L"Terrain.png";
 	//terrainInfo.HeightRatio = 100;
 	terrainInfo.heightMap = L"Terrain/HeightMap512.png";

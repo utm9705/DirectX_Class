@@ -7,7 +7,6 @@ public:
 	~Frustum();
 
 	void Update();
-
 	void GetPlanes(OUT D3DXPLANE* plane);
 
 	bool ContainPoint(D3DXVECTOR3& position);

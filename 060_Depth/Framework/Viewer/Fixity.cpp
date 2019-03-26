@@ -3,7 +3,10 @@
 
 Fixity::Fixity()
 {
+	Position(0, 0, 0);
 
+	Rotation();
+	View();
 }
 
 Fixity::~Fixity()

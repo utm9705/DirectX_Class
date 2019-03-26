@@ -3,7 +3,7 @@
 
 MeshCylinder::MeshCylinder(Shader * shader, float radius, float height, UINT sliceCount, UINT stackCount)
 	: Mesh(shader)
-	, topRadius(radius), bottomRadius(radius * 0.5f), height(height), sliceCount(sliceCount), stackCount(stackCount)
+	, topRadius(radius), bottomRadius(radius), height(height), sliceCount(sliceCount), stackCount(stackCount)
 {
 
 }

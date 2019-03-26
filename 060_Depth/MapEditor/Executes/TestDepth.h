@@ -21,7 +21,7 @@ private:
 	class CubeSky* sky;
 
 	Shader* shader;
-
+	
 	MeshSphere* sphere[10];
 	MeshCylinder* cylinder[10];
 	MeshCube* cube;

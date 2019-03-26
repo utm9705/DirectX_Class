@@ -57,11 +57,11 @@ Sky::~Sky()
 
 void Sky::Ready()
 {
-	starMap = new Texture(L"Starfield.png");
+	starMap = new Texture(L"Environment/Starfield.png");
 	sStarMap->SetResource(starMap->SRV());
 
-	moonMap = new Texture(L"Moon.png");
-	moonGlowMap = new Texture(L"MoonGlow.png");
+	moonMap = new Texture(L"Environment/Moon.png");
+	moonGlowMap = new Texture(L"Environment/MoonGlow.png");
 
 
 	scattering->Ready();

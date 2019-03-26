@@ -30,5 +30,5 @@ private:
 	UINT startIndex;
 	UINT indexCount;
 
-	D3DXPLANE planes;
+	D3DXPLANE planes = D3DXPLANE(1, 0, 0, 0);
 };

@@ -21,7 +21,6 @@ private:
 private:
 	UINT width, height;
 
-	
 	ID3D11Texture2D* rtvTexture;
 	ID3D11RenderTargetView* rtv;
 	ID3D11ShaderResourceView* rtvSrv;
