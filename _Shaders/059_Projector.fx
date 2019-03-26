@@ -5,18 +5,18 @@ matrix Projection2;
 
 float4 Color = float4(1, 0, 0, 1);
 
-struct VertexOuput
+struct VertexOutput
 {
-    float4 Position : SV_POSITION0;
+    float4 Position : SV_POSITION;
     float4 pPosition : Position1;
     float2 Uv : UV0;
     float3 Normal : NORMAL0;
     float3 Tangent : TANGENT0;
 };
 
-VertexOuput VS(VertexTextureNormalTangent input)
+VertexOutput VS(VertexTextureNormalTangent input)
 {
-    VertexOuput output;
+    VertexOutput output;
 
     output.Position = mul(input.Position, World);
     output.Position = mul(output.Position, View);
@@ -24,7 +24,6 @@ VertexOuput VS(VertexTextureNormalTangent input)
 
     output.Normal = mul(input.Normal, (float3x3) World);
     output.Uv = input.Uv;
-
 
     output.pPosition = mul(input.Position, World);
     output.pPosition = mul(output.pPosition, View2);
@@ -38,8 +37,9 @@ VertexOuput VS(VertexTextureNormalTangent input)
 SamplerState Sampler;
 Texture2D ProjectionMap;
 
-float4 PS(VertexOuput input) : SV_TARGET
+float4 PS(VertexOutput input) : SV_TARGET
 {
+    //화면 공간에서의 uv
     float2 uv = 0;
     uv.x = input.pPosition.x / input.pPosition.w * 0.5f + 0.5f;
     uv.y = -input.pPosition.y / input.pPosition.w * 0.5f + 0.5f;

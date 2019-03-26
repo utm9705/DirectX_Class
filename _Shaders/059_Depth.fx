@@ -1,8 +1,8 @@
 #include "000_Header_N.fx"
 
-struct VertexOuput
+struct VertexOutput
 {
-    float4 Position : SV_POSITION0;
+    float4 Position : SV_POSITION;
     float4 pPosition : Position1;
     float2 Uv : UV0;
     float3 Normal : NORMAL0;
@@ -11,9 +11,9 @@ struct VertexOuput
     float Depth : Depth0;
 };
 
-VertexOuput VS(VertexTextureNormalTangent input)
+VertexOutput VS(VertexTextureNormalTangent input)
 {
-    VertexOuput output;
+    VertexOutput output;
 
     output.Position = mul(input.Position, World);
     output.Position = mul(output.Position, View);
@@ -31,8 +31,9 @@ VertexOuput VS(VertexTextureNormalTangent input)
 
 SamplerState Sampler;
 
-float4 PS(VertexOuput input) : SV_TARGET
+float4 PS(VertexOutput input) : SV_TARGET
 {
+   
     return input.Position.z / input.Position.w;
 }
 
