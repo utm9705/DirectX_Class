@@ -3,7 +3,7 @@
 class Shadow
 {
 public:
-	Shadow(Shader* shader);
+	Shadow(Shader* shader, UINT width = 512, UINT height = 512);
 	~Shadow();
 
 	void Ready();
@@ -24,7 +24,11 @@ private:
 	CBuffer* matrixBuffer;
 	ID3DX11EffectConstantBuffer* sMatrixBuffer;
 
-	class RenderTarget* depthTarget;
+	RenderTarget* depthTarget;
+	DepthStencil* depthStencil;
+	Viewport* viewport;
+
+
 	class Fixity* lightCamera;
 	class Perspective* lightPerspective;
 

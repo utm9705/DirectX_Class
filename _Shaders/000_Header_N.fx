@@ -16,6 +16,9 @@ cbuffer CB_PerFrame
     float3 LightPosition;
 }
 
+//-----------------------------------------------------------------------------
+// Texture Buffers
+//-----------------------------------------------------------------------------
 cbuffer CB_Material
 {
     float4 Ambient;
@@ -24,12 +27,25 @@ cbuffer CB_Material
     float Shininess;
 }
 
-//-----------------------------------------------------------------------------
-// Texture Buffers
-//-----------------------------------------------------------------------------
 Texture2D DiffuseMap;
 Texture2D SpecularMap;
 Texture2D NormalMap;
+
+
+cbuffer CB_ShadowDepth
+{
+    matrix ShadowView;
+    matrix ShadowProjection;
+};
+
+cbuffer CB_Shadow
+{
+    float2 ShadowMapSize;
+    float ShadowBias;
+};
+
+Texture2D ShadowMap;
+SamplerState ShadowSampler;
 
 //-----------------------------------------------------------------------------
 // Vertex Input
@@ -172,3 +188,11 @@ float3 TangentSpace(float3 normalMap, float3 normal, float3 tangent)
     return mul(coord, TBN);
 }
 
+float4 ShadowPosition(float4 position)
+{
+    float4 p = 0;
+    p = WorldPosition(position);
+    p = mul(p, ShadowView);
+
+    return mul(p, ShadowProjection);
+}
