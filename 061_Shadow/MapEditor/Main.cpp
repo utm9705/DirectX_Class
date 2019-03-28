@@ -40,6 +40,8 @@ void Main::Update()
 
 void Main::PreRender()
 {
+	Context::Get()->Render();
+	
 	for (IExecute* exe : executes)
 		exe->PreRender();
 }

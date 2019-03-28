@@ -15,6 +15,97 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MapEditor", "MapEditor\MapE
 		{2DB2596E-30CC-4D4D-BC71-5B0B66FCE1FB} = {2DB2596E-30CC-4D4D-BC71-5B0B66FCE1FB}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shaders", "_Shaders", "{210370C2-3974-4D51-90D1-EA6D3B32DFDD}"
+	ProjectSection(SolutionItems) = preProject
+		..\_Shaders\000_Header.fx = ..\_Shaders\000_Header.fx
+		..\_Shaders\000_Header_N.fx = ..\_Shaders\000_Header_N.fx
+		..\_Shaders\000_Light.fx = ..\_Shaders\000_Light.fx
+		..\_Shaders\000_Model.fx = ..\_Shaders\000_Model.fx
+		..\_Shaders\000_Sky.fx = ..\_Shaders\000_Sky.fx
+		..\_Shaders\000_Terrain.fx = ..\_Shaders\000_Terrain.fx
+		..\_Shaders\002_Vertex.hlsl = ..\_Shaders\002_Vertex.hlsl
+		..\_Shaders\003_Vertex.hlsl = ..\_Shaders\003_Vertex.hlsl
+		..\_Shaders\004_Texture.hlsl = ..\_Shaders\004_Texture.hlsl
+		..\_Shaders\007_TextureCoord.hlsl = ..\_Shaders\007_TextureCoord.hlsl
+		..\_Shaders\008_Grid.hlsl = ..\_Shaders\008_Grid.hlsl
+		..\_Shaders\009_Grid.hlsl = ..\_Shaders\009_Grid.hlsl
+		..\_Shaders\009_Rect.hlsl = ..\_Shaders\009_Rect.hlsl
+		..\_Shaders\009_Rect2D.hlsl = ..\_Shaders\009_Rect2D.hlsl
+		..\_Shaders\010_HeightColor.hlsl = ..\_Shaders\010_HeightColor.hlsl
+		..\_Shaders\010_Triangle.hlsl = ..\_Shaders\010_Triangle.hlsl
+		..\_Shaders\011_Model.fx = ..\_Shaders\011_Model.fx
+		..\_Shaders\011_Model.hlsl = ..\_Shaders\011_Model.hlsl
+		..\_Shaders\014_ModelDiffuse.hlsl = ..\_Shaders\014_ModelDiffuse.hlsl
+		..\_Shaders\015_DrawMesh_.hlsl = ..\_Shaders\015_DrawMesh_.hlsl
+		..\_Shaders\015_Line.fx = ..\_Shaders\015_Line.fx
+		..\_Shaders\015_Line.hlsl = ..\_Shaders\015_Line.hlsl
+		..\_Shaders\015_Mesh.fx = ..\_Shaders\015_Mesh.fx
+		..\_Shaders\015_Mesh.hlsl = ..\_Shaders\015_Mesh.hlsl
+		..\_Shaders\016_TerrainBrush.hlsl = ..\_Shaders\016_TerrainBrush.hlsl
+		..\_Shaders\017_TextureSplatting.hlsl = ..\_Shaders\017_TextureSplatting.hlsl
+		..\_Shaders\018_Sky.fx = ..\_Shaders\018_Sky.fx
+		..\_Shaders\018_Sky.hlsl = ..\_Shaders\018_Sky.hlsl
+		..\_Shaders\019_Billboard.hlsl = ..\_Shaders\019_Billboard.hlsl
+		..\_Shaders\020_TerrainGrid.hlsl = ..\_Shaders\020_TerrainGrid.hlsl
+		..\_Shaders\021_Effect.fx = ..\_Shaders\021_Effect.fx
+		..\_Shaders\022_SamplerAddress.fx = ..\_Shaders\022_SamplerAddress.fx
+		..\_Shaders\022_SamplerFilter.fx = ..\_Shaders\022_SamplerFilter.fx
+		..\_Shaders\023_Lighting.fx = ..\_Shaders\023_Lighting.fx
+		..\_Shaders\024_Lighting.fx = ..\_Shaders\024_Lighting.fx
+		..\_Shaders\025_Lighting.fx = ..\_Shaders\025_Lighting.fx
+		..\_Shaders\026_Blur.fx = ..\_Shaders\026_Blur.fx
+		..\_Shaders\026_CubeSky.fx = ..\_Shaders\026_CubeSky.fx
+		..\_Shaders\026_GaussianBlur.fx = ..\_Shaders\026_GaussianBlur.fx
+		..\_Shaders\026_PostEffect.fx = ..\_Shaders\026_PostEffect.fx
+		..\_Shaders\026_PostEffectSample.fx = ..\_Shaders\026_PostEffectSample.fx
+		..\_Shaders\026_Render2D.fx = ..\_Shaders\026_Render2D.fx
+		..\_Shaders\027_Bloom.fx = ..\_Shaders\027_Bloom.fx
+		..\_Shaders\028_Billboard.fx = ..\_Shaders\028_Billboard.fx
+		..\_Shaders\028_Rect.fx = ..\_Shaders\028_Rect.fx
+		..\_Shaders\028_Terrain.fx = ..\_Shaders\028_Terrain.fx
+		..\_Shaders\039_Model.fx = ..\_Shaders\039_Model.fx
+		..\_Shaders\043_Byte.fx = ..\_Shaders\043_Byte.fx
+		..\_Shaders\044_Structured.fx = ..\_Shaders\044_Structured.fx
+		..\_Shaders\045_Vertex.fx = ..\_Shaders\045_Vertex.fx
+		..\_Shaders\046_CsModel.fx = ..\_Shaders\046_CsModel.fx
+		..\_Shaders\046_Model.fx = ..\_Shaders\046_Model.fx
+		..\_Shaders\052_Instance.fx = ..\_Shaders\052_Instance.fx
+		..\_Shaders\052_Vertex.fx = ..\_Shaders\052_Vertex.fx
+		..\_Shaders\053_ModelInstance.fx = ..\_Shaders\053_ModelInstance.fx
+		..\_Shaders\053_Texture.fx = ..\_Shaders\053_Texture.fx
+		..\_Shaders\054_ModelAnimInstance.fx = ..\_Shaders\054_ModelAnimInstance.fx
+		..\_Shaders\054_ModelInstance.fx = ..\_Shaders\054_ModelInstance.fx
+		..\_Shaders\055_ModelAnimInstance.fx = ..\_Shaders\055_ModelAnimInstance.fx
+		..\_Shaders\055_TessRect.fx = ..\_Shaders\055_TessRect.fx
+		..\_Shaders\055_TessRectDistance.fx = ..\_Shaders\055_TessRectDistance.fx
+		..\_Shaders\055_TessTriangle.fx = ..\_Shaders\055_TessTriangle.fx
+		..\_Shaders\055_TestRect.fx = ..\_Shaders\055_TestRect.fx
+		..\_Shaders\055_TestRectDistance.fx = ..\_Shaders\055_TestRectDistance.fx
+		..\_Shaders\055_TestTriangle.fx = ..\_Shaders\055_TestTriangle.fx
+		..\_Shaders\056_NormalMap.fx = ..\_Shaders\056_NormalMap.fx
+		..\_Shaders\057_Model.fx = ..\_Shaders\057_Model.fx
+		..\_Shaders\057_ModelInstance_Normal.fx = ..\_Shaders\057_ModelInstance_Normal.fx
+		..\_Shaders\057_NormalMap.fx = ..\_Shaders\057_NormalMap.fx
+		..\_Shaders\057_Terrain.fx = ..\_Shaders\057_Terrain.fx
+		..\_Shaders\057_Terrain_Tesselation.fx = ..\_Shaders\057_Terrain_Tesselation.fx
+		..\_Shaders\058_Scattering.fx = ..\_Shaders\058_Scattering.fx
+		..\_Shaders\059_Depth.fx = ..\_Shaders\059_Depth.fx
+		..\_Shaders\059_Projector.fx = ..\_Shaders\059_Projector.fx
+		..\_Shaders\060_Depth.fx = ..\_Shaders\060_Depth.fx
+		..\_Shaders\061_Shadow.fx = ..\_Shaders\061_Shadow.fx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Project", "_Project", "{5391F747-0A59-418F-A500-63401B871C43}"
+	ProjectSection(SolutionItems) = preProject
+		..\_Shaders\_Project\000_Header_N.fx = ..\_Shaders\_Project\000_Header_N.fx
+		..\_Shaders\_Project\000_Sky.fx = ..\_Shaders\_Project\000_Sky.fx
+		..\_Shaders\_Project\058_Scattering.fx = ..\_Shaders\_Project\058_Scattering.fx
+		..\_Shaders\_Project\059_RainInst.fx = ..\_Shaders\_Project\059_RainInst.fx
+		..\_Shaders\_Project\059_SnowInst.fx = ..\_Shaders\_Project\059_SnowInst.fx
+		..\_Shaders\_Project\Rain.fx = ..\_Shaders\_Project\Rain.fx
+		..\_Shaders\_Project\Snow.fx = ..\_Shaders\_Project\Snow.fx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -36,5 +127,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5391F747-0A59-418F-A500-63401B871C43} = {210370C2-3974-4D51-90D1-EA6D3B32DFDD}
 	EndGlobalSection
 EndGlobal

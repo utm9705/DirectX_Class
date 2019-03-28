@@ -45,7 +45,16 @@ cbuffer CB_Shadow
 };
 
 Texture2D ShadowMap;
-SamplerState ShadowSampler;
+SamplerComparisonState ShadowSampler
+{
+    Filter = COMPARISON_MIN_MAG_MIP_LINEAR;
+    //AddressU = BORDER;
+    //AddressV = BORDER;
+    //AddressW = BORDER;
+    //BorderColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
+
+    ComparisonFunc = LESS_EQUAL;
+};
 
 //-----------------------------------------------------------------------------
 // Vertex Input
@@ -186,13 +195,4 @@ float3 TangentSpace(float3 normalMap, float3 normal, float3 tangent)
     float3x3 TBN = float3x3(T, B, N);
 
     return mul(coord, TBN);
-}
-
-float4 ShadowPosition(float4 position)
-{
-    float4 p = 0;
-    p = WorldPosition(position);
-    p = mul(p, ShadowView);
-
-    return mul(p, ShadowProjection);
 }

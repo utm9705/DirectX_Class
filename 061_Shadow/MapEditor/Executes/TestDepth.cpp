@@ -48,7 +48,7 @@ void TestDepth::Ready()
 	}
 
 
-	shadow = new Shadow(shader);
+	shadow = new Shadow(shader, 2048, 2048);
 	shadow->Ready();
 }
 

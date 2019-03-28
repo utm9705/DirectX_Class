@@ -13,6 +13,9 @@ public:
 	void PostRender();
 
 private:
+	void ShadowTransform();
+
+private:
 	struct ShadowDepthDesc
 	{
 		D3DXMATRIX View;
@@ -43,9 +46,10 @@ private:
 	DepthStencil* depthStencil;
 	Viewport* viewport;
 
-
-	class Fixity* lightCamera;
-	class Perspective* lightPerspective;
+	D3DXVECTOR3 center;
+	float radius;
 
 	class Render2D* depthRender;
+
+	ID3D11SamplerState* samplerState;
 };
