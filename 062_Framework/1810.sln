@@ -1,0 +1,124 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Framework", "Framework\Framework.vcxproj", "{2DB2596E-30CC-4D4D-BC71-5B0B66FCE1FB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModelEditor", "ModelEditor\ModelEditor.vcxproj", "{70EDD1E2-40C1-40FB-AFD6-C578435DF84E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2DB2596E-30CC-4D4D-BC71-5B0B66FCE1FB} = {2DB2596E-30CC-4D4D-BC71-5B0B66FCE1FB}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MapEditor", "MapEditor\MapEditor.vcxproj", "{2E3D9A1E-03DF-4B45-97E2-90662D3674E6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2DB2596E-30CC-4D4D-BC71-5B0B66FCE1FB} = {2DB2596E-30CC-4D4D-BC71-5B0B66FCE1FB}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shaders", "_Shaders", "{298EC393-8DFE-4756-AB8E-503EACF1905A}"
+	ProjectSection(SolutionItems) = preProject
+		..\_Shaders\000_Header.fx = ..\_Shaders\000_Header.fx
+		..\_Shaders\000_Header_N.fx = ..\_Shaders\000_Header_N.fx
+		..\_Shaders\000_Light.fx = ..\_Shaders\000_Light.fx
+		..\_Shaders\000_Model.fx = ..\_Shaders\000_Model.fx
+		..\_Shaders\000_Sky.fx = ..\_Shaders\000_Sky.fx
+		..\_Shaders\000_Terrain.fx = ..\_Shaders\000_Terrain.fx
+		..\_Shaders\002_Vertex.hlsl = ..\_Shaders\002_Vertex.hlsl
+		..\_Shaders\003_Vertex.hlsl = ..\_Shaders\003_Vertex.hlsl
+		..\_Shaders\004_Texture.hlsl = ..\_Shaders\004_Texture.hlsl
+		..\_Shaders\007_TextureCoord.hlsl = ..\_Shaders\007_TextureCoord.hlsl
+		..\_Shaders\008_Grid.hlsl = ..\_Shaders\008_Grid.hlsl
+		..\_Shaders\009_Grid.hlsl = ..\_Shaders\009_Grid.hlsl
+		..\_Shaders\009_Rect.hlsl = ..\_Shaders\009_Rect.hlsl
+		..\_Shaders\009_Rect2D.hlsl = ..\_Shaders\009_Rect2D.hlsl
+		..\_Shaders\010_HeightColor.hlsl = ..\_Shaders\010_HeightColor.hlsl
+		..\_Shaders\010_Triangle.hlsl = ..\_Shaders\010_Triangle.hlsl
+		..\_Shaders\011_Model.fx = ..\_Shaders\011_Model.fx
+		..\_Shaders\011_Model.hlsl = ..\_Shaders\011_Model.hlsl
+		..\_Shaders\014_ModelDiffuse.hlsl = ..\_Shaders\014_ModelDiffuse.hlsl
+		..\_Shaders\015_DrawMesh_.hlsl = ..\_Shaders\015_DrawMesh_.hlsl
+		..\_Shaders\015_Line.fx = ..\_Shaders\015_Line.fx
+		..\_Shaders\015_Line.hlsl = ..\_Shaders\015_Line.hlsl
+		..\_Shaders\015_Mesh.fx = ..\_Shaders\015_Mesh.fx
+		..\_Shaders\015_Mesh.hlsl = ..\_Shaders\015_Mesh.hlsl
+		..\_Shaders\016_TerrainBrush.hlsl = ..\_Shaders\016_TerrainBrush.hlsl
+		..\_Shaders\017_TextureSplatting.hlsl = ..\_Shaders\017_TextureSplatting.hlsl
+		..\_Shaders\018_Sky.fx = ..\_Shaders\018_Sky.fx
+		..\_Shaders\018_Sky.hlsl = ..\_Shaders\018_Sky.hlsl
+		..\_Shaders\019_Billboard.hlsl = ..\_Shaders\019_Billboard.hlsl
+		..\_Shaders\020_TerrainGrid.hlsl = ..\_Shaders\020_TerrainGrid.hlsl
+		..\_Shaders\021_Effect.fx = ..\_Shaders\021_Effect.fx
+		..\_Shaders\022_SamplerAddress.fx = ..\_Shaders\022_SamplerAddress.fx
+		..\_Shaders\022_SamplerFilter.fx = ..\_Shaders\022_SamplerFilter.fx
+		..\_Shaders\023_Lighting.fx = ..\_Shaders\023_Lighting.fx
+		..\_Shaders\024_Lighting.fx = ..\_Shaders\024_Lighting.fx
+		..\_Shaders\025_Lighting.fx = ..\_Shaders\025_Lighting.fx
+		..\_Shaders\026_Blur.fx = ..\_Shaders\026_Blur.fx
+		..\_Shaders\026_CubeSky.fx = ..\_Shaders\026_CubeSky.fx
+		..\_Shaders\026_GaussianBlur.fx = ..\_Shaders\026_GaussianBlur.fx
+		..\_Shaders\026_PostEffect.fx = ..\_Shaders\026_PostEffect.fx
+		..\_Shaders\026_PostEffectSample.fx = ..\_Shaders\026_PostEffectSample.fx
+		..\_Shaders\026_Render2D.fx = ..\_Shaders\026_Render2D.fx
+		..\_Shaders\027_Bloom.fx = ..\_Shaders\027_Bloom.fx
+		..\_Shaders\028_Billboard.fx = ..\_Shaders\028_Billboard.fx
+		..\_Shaders\028_Rect.fx = ..\_Shaders\028_Rect.fx
+		..\_Shaders\028_Terrain.fx = ..\_Shaders\028_Terrain.fx
+		..\_Shaders\039_Model.fx = ..\_Shaders\039_Model.fx
+		..\_Shaders\043_Byte.fx = ..\_Shaders\043_Byte.fx
+		..\_Shaders\044_Structured.fx = ..\_Shaders\044_Structured.fx
+		..\_Shaders\045_Vertex.fx = ..\_Shaders\045_Vertex.fx
+		..\_Shaders\046_CsModel.fx = ..\_Shaders\046_CsModel.fx
+		..\_Shaders\046_Model.fx = ..\_Shaders\046_Model.fx
+		..\_Shaders\052_Instance.fx = ..\_Shaders\052_Instance.fx
+		..\_Shaders\052_Vertex.fx = ..\_Shaders\052_Vertex.fx
+		..\_Shaders\053_ModelInstance.fx = ..\_Shaders\053_ModelInstance.fx
+		..\_Shaders\053_Texture.fx = ..\_Shaders\053_Texture.fx
+		..\_Shaders\054_ModelAnimInstance.fx = ..\_Shaders\054_ModelAnimInstance.fx
+		..\_Shaders\055_TessRect.fx = ..\_Shaders\055_TessRect.fx
+		..\_Shaders\055_TessRectDistance.fx = ..\_Shaders\055_TessRectDistance.fx
+		..\_Shaders\055_TessTriangle.fx = ..\_Shaders\055_TessTriangle.fx
+		..\_Shaders\057_Model.fx = ..\_Shaders\057_Model.fx
+		..\_Shaders\057_NormalMap.fx = ..\_Shaders\057_NormalMap.fx
+		..\_Shaders\057_Terrain_Tesselation.fx = ..\_Shaders\057_Terrain_Tesselation.fx
+		..\_Shaders\058_Scattering.fx = ..\_Shaders\058_Scattering.fx
+		..\_Shaders\059_Depth.fx = ..\_Shaders\059_Depth.fx
+		..\_Shaders\059_Projector.fx = ..\_Shaders\059_Projector.fx
+		..\_Shaders\060_Depth.fx = ..\_Shaders\060_Depth.fx
+		..\_Shaders\061_Shadow - 복사본.fx = ..\_Shaders\061_Shadow - 복사본.fx
+		..\_Shaders\061_Shadow.fx = ..\_Shaders\061_Shadow.fx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shaders_N", "_Shaders_N", "{4BF760BA-2891-4DC0-B747-1EEEF4FF9890}"
+	ProjectSection(SolutionItems) = preProject
+		..\_Shaders_N\000_Header.fx = ..\_Shaders_N\000_Header.fx
+		..\_Shaders_N\000_Light.fx = ..\_Shaders_N\000_Light.fx
+		..\_Shaders_N\000_Terrain.fx = ..\_Shaders_N\000_Terrain.fx
+		..\_Shaders_N\026_CubeSky.fx = ..\_Shaders_N\026_CubeSky.fx
+		..\_Shaders_N\026_Render2D.fx = ..\_Shaders_N\026_Render2D.fx
+		..\_Shaders_N\057_Terrain_Tesselation.fx = ..\_Shaders_N\057_Terrain_Tesselation.fx
+		..\_Shaders_N\061_Shadow.fx = ..\_Shaders_N\061_Shadow.fx
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2DB2596E-30CC-4D4D-BC71-5B0B66FCE1FB}.Debug|x86.ActiveCfg = Debug|Win32
+		{2DB2596E-30CC-4D4D-BC71-5B0B66FCE1FB}.Debug|x86.Build.0 = Debug|Win32
+		{2DB2596E-30CC-4D4D-BC71-5B0B66FCE1FB}.Release|x86.ActiveCfg = Release|Win32
+		{2DB2596E-30CC-4D4D-BC71-5B0B66FCE1FB}.Release|x86.Build.0 = Release|Win32
+		{70EDD1E2-40C1-40FB-AFD6-C578435DF84E}.Debug|x86.ActiveCfg = Debug|Win32
+		{70EDD1E2-40C1-40FB-AFD6-C578435DF84E}.Debug|x86.Build.0 = Debug|Win32
+		{70EDD1E2-40C1-40FB-AFD6-C578435DF84E}.Release|x86.ActiveCfg = Release|Win32
+		{70EDD1E2-40C1-40FB-AFD6-C578435DF84E}.Release|x86.Build.0 = Release|Win32
+		{2E3D9A1E-03DF-4B45-97E2-90662D3674E6}.Debug|x86.ActiveCfg = Debug|Win32
+		{2E3D9A1E-03DF-4B45-97E2-90662D3674E6}.Debug|x86.Build.0 = Debug|Win32
+		{2E3D9A1E-03DF-4B45-97E2-90662D3674E6}.Release|x86.ActiveCfg = Release|Win32
+		{2E3D9A1E-03DF-4B45-97E2-90662D3674E6}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
